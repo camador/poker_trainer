@@ -1,6 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+#
+# César Amador - camador.git@gmail.com 
+#
+# Licenciado bajo Creative Commons Reconocimiento 3.0 Unported: http://creativecommons.org/licenses/by/3.0/deed.es_ES
+#
+
 # PyQt
 from PyQt4 import uic, QtGui, QtCore
 
