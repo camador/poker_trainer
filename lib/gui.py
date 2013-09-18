@@ -6,6 +6,7 @@ from PyQt4 import uic, QtGui, QtCore
 
 # Otros
 import sys
+import os
 
 class GUI(QtGui.QWidget):
     """
@@ -24,7 +25,7 @@ class GUI(QtGui.QWidget):
         self.app.setApplicationName('Poker Trainer')
         
         # Lee el fichero que contiene la interfaz gráfica
-        self.ui = uic.loadUi('lib/gui.ui')
+        self.ui = uic.loadUi(os.path.join('lib', 'gui.ui'))
 
         #
         # Lee los widgets y los asigna a variables
