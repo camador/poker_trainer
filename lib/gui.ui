@@ -26,6 +26,9 @@
     <property name="text">
      <string>Salir</string>
     </property>
+    <property name="shortcut">
+     <string>Esc</string>
+    </property>
    </widget>
    <widget class="QWidget" name="layoutWidget_4">
     <property name="geometry">
@@ -38,16 +41,12 @@
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_4">
      <item>
-      <widget class="QPushButton" name="pbtRonda">
+      <widget class="QPushButton" name="pbtPaso">
        <property name="text">
         <string>TURN</string>
        </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pbtShuffle">
-       <property name="text">
-        <string>SHUFFLE</string>
+       <property name="shortcut">
+        <string>Space</string>
        </property>
       </widget>
      </item>
@@ -317,7 +316,6 @@
   </widget>
  </widget>
  <tabstops>
-  <tabstop>pbtShuffle</tabstop>
   <tabstop>pbtSalir</tabstop>
  </tabstops>
  <resources/>
