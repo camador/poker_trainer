@@ -125,11 +125,10 @@ class GUI(QtGui.QWidget):
             Calcula, fija y devuelve el siguiente paso
         """
     
-        if self.paso < self.num_pasos - 1:
-            self.paso += 1
-        else:
+        self.paso += 1
+
+        if self.paso == self.num_pasos:
             self.paso = 0
-        print self.paso
 
         return self.paso
 
