@@ -7,6 +7,11 @@ Entrenador de póker.
 * [Python 2.7](http://www.python.org/)
 * [PyQt](http://www.riverbankcomputing.co.uk/software/pyqt/intro)
 
+##Créditos
+
+- Gráficos:
+  - Imágenes de las cartas por [Byron Knoll](http://byronknoll.blogspot.com.es/2011/03/vector-playing-cards.html)
+
 ##Licencia
 
 César Amador - camador.git@gmail.com 
