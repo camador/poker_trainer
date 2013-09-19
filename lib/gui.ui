@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>447</width>
-    <height>358</height>
+    <width>590</width>
+    <height>472</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,8 +17,8 @@
    <widget class="QPushButton" name="pbtSalir">
     <property name="geometry">
      <rect>
-      <x>350</x>
-      <y>330</y>
+      <x>490</x>
+      <y>440</y>
       <width>91</width>
       <height>23</height>
      </rect>
@@ -30,8 +30,8 @@
    <widget class="QWidget" name="layoutWidget_4">
     <property name="geometry">
      <rect>
-      <x>150</x>
-      <y>290</y>
+      <x>220</x>
+      <y>390</y>
       <width>158</width>
       <height>41</height>
      </rect>
@@ -57,9 +57,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>170</y>
-      <width>419</width>
-      <height>111</height>
+      <y>200</y>
+      <width>570</width>
+      <height>180</height>
      </rect>
     </property>
     <property name="title">
@@ -70,8 +70,8 @@
       <rect>
        <x>10</x>
        <y>20</y>
-       <width>400</width>
-       <height>22</height>
+       <width>550</width>
+       <height>152</height>
       </rect>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_5">
@@ -90,15 +90,39 @@
       </item>
       <item>
        <widget class="QLabel" name="lblJugadorCarta1">
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>150</height>
+         </size>
+        </property>
         <property name="text">
-         <string>Carta 1</string>
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap>../imagenes/2_of_clubs.png</pixmap>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QLabel" name="lblJugadorCarta2">
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>150</height>
+         </size>
+        </property>
         <property name="text">
-         <string>Carta 2</string>
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap>../imagenes/2_of_clubs.png</pixmap>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -123,8 +147,8 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>419</width>
-      <height>151</height>
+      <width>571</width>
+      <height>181</height>
      </rect>
     </property>
     <property name="title">
@@ -135,15 +159,27 @@
       <rect>
        <x>10</x>
        <y>20</y>
-       <width>400</width>
-       <height>22</height>
+       <width>550</width>
+       <height>152</height>
       </rect>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_6">
       <item>
        <widget class="QLabel" name="lblMesaCarta1">
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>150</height>
+         </size>
+        </property>
         <property name="text">
-         <string>Carta 1</string>
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap>../imagenes/2_of_hearts.png</pixmap>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -162,8 +198,20 @@
       </item>
       <item>
        <widget class="QLabel" name="lblMesaCarta2">
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>150</height>
+         </size>
+        </property>
         <property name="text">
-         <string>Carta 2</string>
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap>../imagenes/2_of_hearts.png</pixmap>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -182,8 +230,20 @@
       </item>
       <item>
        <widget class="QLabel" name="lblMesaCarta3">
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>150</height>
+         </size>
+        </property>
         <property name="text">
-         <string>Carta 3</string>
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap>../imagenes/2_of_clubs.png</pixmap>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -202,8 +262,20 @@
       </item>
       <item>
        <widget class="QLabel" name="lblMesaCarta4">
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>150</height>
+         </size>
+        </property>
         <property name="text">
-         <string>Carta 4</string>
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap>../imagenes/2_of_clubs.png</pixmap>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -222,8 +294,20 @@
       </item>
       <item>
        <widget class="QLabel" name="lblMesaCarta5">
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>150</height>
+         </size>
+        </property>
         <property name="text">
-         <string>Carta 5</string>
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap>../imagenes/2_of_clubs.png</pixmap>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
