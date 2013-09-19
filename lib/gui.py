@@ -10,6 +10,9 @@
 # PyQt
 from PyQt4 import uic, QtGui, QtCore
 
+# Config
+from lib.config import Config 
+
 # Otros
 import sys
 import os
@@ -37,15 +40,33 @@ class GUI(QtGui.QWidget):
         # Lee los widgets y los asigna a variables
         #
 
-        # Botón salir
+        # Botón Salir
         self.pushbutton_salir = self.ui.findChild(QtGui.QPushButton, "pbtSalir")
+
+        # Botón Paso
+        self.pushbutton_paso = self.ui.findChild(QtGui.QPushButton, "pbtPaso")
 
         #
         # Conecta las señales
         #
 
-        # Botón salir
+        # Botón Salir
         self.pushbutton_salir.clicked.connect(self.on_salir)
+
+        # Botón Paso
+        self.pushbutton_paso.clicked.connect(self.on_paso)
+
+        #
+        # Configuración
+        #
+        self.config = Config()
+
+        # Paso actual
+        self.paso = 0
+
+        # Número de pasos
+        self.num_pasos = len(self.config.PASOS)
+
 
     ##
     ## MAIN
@@ -84,6 +105,33 @@ class GUI(QtGui.QWidget):
         # Sale
         self.window_main_destroy()
 
+    ##
+    ## PASO 
+    ##
+    @QtCore.pyqtSlot()
+    def on_paso(self):
+        """
+            Avanza hasta el siguiente paso 
+        """
+
+        # Fija el texto del botón para el siguiente paso
+        self.pushbutton_paso.setText(self.config.PASOS[self.get_siguiente_paso()])
+    
+    ##
+    ## MÉTODOS AUXILIARES
+    ##
+    def get_siguiente_paso(self):
+        """
+            Calcula, fija y devuelve el siguiente paso
+        """
+    
+        if self.paso < self.num_pasos - 1:
+            self.paso += 1
+        else:
+            self.paso = 0
+        print self.paso
+
+        return self.paso
 
 if __name__ == '__main__':
     print u'Módulo no ejecutable.'
