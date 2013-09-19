@@ -11,6 +11,7 @@ Entrenador de póker.
 
 - Gráficos:
   - Imágenes de las cartas por [Byron Knoll](http://byronknoll.blogspot.com.es/2011/03/vector-playing-cards.html)
+  - Imagen del reverso por [Chris Aguilar](http://code.google.com/p/vectorized-playing-cards/)
 
 ##Licencia
 
