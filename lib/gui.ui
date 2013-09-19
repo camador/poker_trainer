@@ -43,7 +43,7 @@
      <item>
       <widget class="QPushButton" name="pbtPaso">
        <property name="text">
-        <string>TURN</string>
+        <string>FLOP</string>
        </property>
        <property name="shortcut">
         <string>Space</string>
@@ -313,9 +313,15 @@
      </layout>
     </widget>
    </widget>
+   <zorder>pbtSalir</zorder>
+   <zorder>layoutWidget_4</zorder>
+   <zorder>grbJugador</zorder>
+   <zorder>grbMesa</zorder>
+   <zorder>pbtPaso</zorder>
   </widget>
  </widget>
  <tabstops>
+  <tabstop>pbtPaso</tabstop>
   <tabstop>pbtSalir</tabstop>
  </tabstops>
  <resources/>
