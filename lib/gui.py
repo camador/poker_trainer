@@ -16,6 +16,7 @@ from lib.config import Config
 # Otros
 import sys
 import os
+from random import randint
 
 class GUI(QtGui.QWidget):
     """
@@ -78,8 +79,14 @@ class GUI(QtGui.QWidget):
         # Número de pasos
         self.num_pasos = len(self.config.PASOS)
 
+        # Cartas de la mesa
+        self.cartas_mesa = list()
+
         # Cartas del jugador
-        self.jugador_cartas = [None, None]
+        self.cartas_jugador = list()
+
+        # Cartas repartidas
+        self.cartas_repartidas = list()
 
 
     ##
@@ -107,11 +114,11 @@ class GUI(QtGui.QWidget):
 
         # Cartas del jugador
         # Se generan dos cartas aleatorias
-        self.jugador_cartas[0] = 24 #self.generar_carta()
-        self.jugador_cartas[1] = 38 #self.generar_carta()
+        self.cartas_jugador.insert(0, self.generar_carta())
+        self.cartas_jugador.insert(1, self.generar_carta())
         
-        self.label_jugador_carta_1.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(self.jugador_cartas[0])))
-        self.label_jugador_carta_2.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(self.jugador_cartas[1])))
+        self.label_jugador_carta_1.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(self.cartas_jugador[0])))
+        self.label_jugador_carta_2.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(self.cartas_jugador[1])))
 
 
         # Muestra la ventana principal
@@ -176,6 +183,33 @@ class GUI(QtGui.QWidget):
             self.paso = 0
 
         return self.paso
+
+    def generar_carta(self):
+        """
+            Genera y devuelve una carta aleatoria de las que todavía no han sido repartidas 
+        """
+        
+        carta = False
+
+        while not carta:
+
+            # Genera la carta aleatoria
+            carta = randint(1, 52)
+
+            try:
+                # Comprueba que la carta no haya sido ya repartida
+                self.cartas_repartidas.index(carta)
+                
+                # La carta existe, busca otra
+                carta = False 
+
+            except:
+
+                # La carta no existe, la guarda en las cartas ya repartidas
+                self.cartas_repartidas.append(carta)
+
+        return carta 
+        
 
 if __name__ == '__main__':
     print u'Módulo no ejecutable.'
