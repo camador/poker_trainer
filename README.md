@@ -13,6 +13,10 @@ Entrenador de póker.
   - Imágenes de las cartas por [Byron Knoll](http://byronknoll.blogspot.com.es/2011/03/vector-playing-cards.html)
   - Imagen del reverso por [Chris Aguilar](http://code.google.com/p/vectorized-playing-cards/)
 
+##Agradecimientos
+
+- Asesoramiento y pruebas: [Edwar](https://soundcloud.com/edwar-rodriguez)
+
 ##Licencia
 
 César Amador - camador.git@gmail.com 
