@@ -21,7 +21,7 @@ class Config():
     CARTAS = [
                 {'imagen': 'Blue_Back', 'nombre': 'Reverso'},
 
-                {'imagen': 'ace_of_spades', 'nombre': 'As'},
+                {'imagen': 'ace_of_spades2', 'nombre': 'As'},
                 {'imagen': '2_of_spades', 'nombre': '2s'},
                 {'imagen': '3_of_spades', 'nombre': '3s'},
                 {'imagen': '4_of_spades', 'nombre': '4s'},
@@ -31,9 +31,9 @@ class Config():
                 {'imagen': '8_of_spades', 'nombre': '8s'},
                 {'imagen': '9_of_spades', 'nombre': '9s'},
                 {'imagen': '10_of_spades', 'nombre': '10s'},
-                {'imagen': 'jack_of_spades', 'nombre': 'Js'},
-                {'imagen': 'queen_of_spades', 'nombre': 'Qs'},
-                {'imagen': 'king_of_spades', 'nombre': 'Ks'},
+                {'imagen': 'jack_of_spades2', 'nombre': 'Js'},
+                {'imagen': 'queen_of_spades2', 'nombre': 'Qs'},
+                {'imagen': 'king_of_spades2', 'nombre': 'Ks'},
 
                 {'imagen': 'ace_of_hearts', 'nombre': 'Ah'},
                 {'imagen': '2_of_hearts', 'nombre': '2h'},
@@ -45,9 +45,9 @@ class Config():
                 {'imagen': '8_of_hearts', 'nombre': '8h'},
                 {'imagen': '9_of_hearts', 'nombre': '9h'},
                 {'imagen': '10_of_hearts', 'nombre': '10h'},
-                {'imagen': 'jack_of_hearts', 'nombre': 'Jh'},
-                {'imagen': 'queen_of_hearts', 'nombre': 'Qh'},
-                {'imagen': 'king_of_hearts', 'nombre': 'Kh'},
+                {'imagen': 'jack_of_hearts2', 'nombre': 'Jh'},
+                {'imagen': 'queen_of_hearts2', 'nombre': 'Qh'},
+                {'imagen': 'king_of_hearts2', 'nombre': 'Kh'},
 
                 {'imagen': 'ace_of_diamonds', 'nombre': 'Ad'},
                 {'imagen': '2_of_diamonds', 'nombre': '2d'},
@@ -59,9 +59,9 @@ class Config():
                 {'imagen': '8_of_diamonds', 'nombre': '8d'},
                 {'imagen': '9_of_diamonds', 'nombre': '9d'},
                 {'imagen': '10_of_diamonds', 'nombre': '10d'},
-                {'imagen': 'jack_of_diamonds', 'nombre': 'Jd'},
-                {'imagen': 'queen_of_diamonds', 'nombre': 'Qd'},
-                {'imagen': 'king_of_diamonds', 'nombre': 'Kd'},
+                {'imagen': 'jack_of_diamonds2', 'nombre': 'Jd'},
+                {'imagen': 'queen_of_diamonds2', 'nombre': 'Qd'},
+                {'imagen': 'king_of_diamonds2', 'nombre': 'Kd'},
 
                 {'imagen': 'ace_of_clubs', 'nombre': 'Ac'},
                 {'imagen': '2_of_clubs', 'nombre': '2c'},
@@ -73,9 +73,9 @@ class Config():
                 {'imagen': '8_of_clubs', 'nombre': '8c'},
                 {'imagen': '9_of_clubs', 'nombre': '9c'},
                 {'imagen': '10_of_clubs', 'nombre': '10c'},
-                {'imagen': 'jack_of_clubs', 'nombre': 'Jc'},
-                {'imagen': 'queen_of_clubs', 'nombre': 'Qc'},
-                {'imagen': 'king_of_clubs', 'nombre': 'Kc'}
+                {'imagen': 'jack_of_clubs2', 'nombre': 'Jc'},
+                {'imagen': 'queen_of_clubs2', 'nombre': 'Qc'},
+                {'imagen': 'king_of_clubs2', 'nombre': 'Kc'}
             ]
 
     ##
