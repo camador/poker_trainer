@@ -13,7 +13,7 @@ class Config():
     """
 
     # Pasos
-    PASOS = ['FLOP', 'TURN', 'RIVER', 'PREFLOP']
+    PASOS = ['PREFLOP', 'FLOP', 'TURN', 'RIVER']
 
     # Cartas
     CARTAS = [
