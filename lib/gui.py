@@ -104,21 +104,8 @@ class GUI(QtGui.QWidget):
         # Texto para el botón de los pasos
         self.set_paso(self.paso)
 
-        # Cartas de la mesa
-        # El estado inicial es Preflop, es decir, no hay cartas en la mesa
-        self.label_mesa_carta_1.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(0)))
-        self.label_mesa_carta_2.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(0)))
-        self.label_mesa_carta_3.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(0)))
-        self.label_mesa_carta_4.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(0)))
-        self.label_mesa_carta_5.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(0)))
-
-        # Cartas del jugador
-        # Se generan dos cartas aleatorias
-        self.cartas_jugador.insert(0, self.generar_carta())
-        self.cartas_jugador.insert(1, self.generar_carta())
-        
-        self.label_jugador_carta_1.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(self.cartas_jugador[0])))
-        self.label_jugador_carta_2.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(self.cartas_jugador[1])))
+        # Primer paso: preflop
+        self.preflop()
 
 
         # Muestra la ventana principal
@@ -156,11 +143,90 @@ class GUI(QtGui.QWidget):
     @QtCore.pyqtSlot()
     def on_paso(self):
         """
-            Avanza hasta el siguiente paso 
+            Avanza hasta el siguiente paso con las siguientes acciones:
+            - FLOP: Reparte tres cartas en la mesa
+            - TURN: Reparte la cuarta carta en la mesa
+            - RIVER: Reparte la quinta carta en la mesa
+            - PREFLOP: Reinicia las manos recogiendo todas las cartas, barajando y repartiendo dos
+                       nuevas cartas al jugador
         """
 
-        # Fija el texto del botón para el siguiente paso
+        # Establece el siguiente paso y fija el texto correspondiente para el botón de los pasos
         self.set_paso(self.get_siguiente_paso())
+
+        if self.paso == 1:
+            self.flop()
+
+        elif self.paso == 2:
+            self.turn()
+
+        elif self.paso == 3:
+            self.river()
+
+        else:
+            self.preflop()
+
+    def preflop(self):
+        """
+            Dos cartas para el jugador, ninguna en la mesa 
+        """
+
+        # Se recogen y barajan todas las cartas
+        self.cartas_mesa = list()
+        self.cartas_jugador = list()
+        self.cartas_repartidas = list()
+    
+        # Cartas de la mesa
+        self.label_mesa_carta_1.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(0)))
+        self.label_mesa_carta_2.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(0)))
+        self.label_mesa_carta_3.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(0)))
+        self.label_mesa_carta_4.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(0)))
+        self.label_mesa_carta_5.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(0)))
+
+        # Cartas del jugador
+        self.cartas_jugador.insert(0, self.generar_carta())
+        self.cartas_jugador.insert(1, self.generar_carta())
+        
+        self.label_jugador_carta_1.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(self.cartas_jugador[0])))
+        self.label_jugador_carta_2.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(self.cartas_jugador[1])))
+
+    def flop(self):
+        """ 
+            Tres cartas en la mesa
+        """ 
+
+        # Genera las cartas
+        self.cartas_mesa.insert(0, self.generar_carta())
+        self.cartas_mesa.insert(1, self.generar_carta())
+        self.cartas_mesa.insert(2, self.generar_carta())
+        
+        # Y las muestras
+        self.label_mesa_carta_1.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(self.cartas_mesa[0])))
+        self.label_mesa_carta_2.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(self.cartas_mesa[1])))
+        self.label_mesa_carta_3.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(self.cartas_mesa[2])))
+
+    def turn(self):
+        """ 
+            Cuarta carta de la mesa
+        """ 
+
+        # Genera la carta
+        self.cartas_mesa.insert(3, self.generar_carta())
+        
+        # Y la muestra
+        self.label_mesa_carta_4.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(self.cartas_mesa[3])))
+
+    def river(self):
+        """ 
+            Quinta carta de la mesa
+        """ 
+
+        # Genera la carta
+        self.cartas_mesa.insert(4, self.generar_carta())
+        
+        # Y la muestra
+        self.label_mesa_carta_5.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(self.cartas_mesa[4])))
+           
     
     ##
     ## MÉTODOS AUXILIARES
