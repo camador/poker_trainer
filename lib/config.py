@@ -15,7 +15,7 @@ class Config():
     """
 
     # Pasos
-    PASOS = ('PREFLOP', 'FLOP', 'TURN', 'RIVER')
+    PASOS = ('FLOP', 'TURN', 'RIVER', 'PREFLOP')
 
     # Cartas
     CARTAS = (
