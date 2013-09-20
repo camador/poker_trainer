@@ -46,6 +46,13 @@ class GUI(QtGui.QWidget):
         # Botón Paso
         self.pushbutton_paso = self.ui.findChild(QtGui.QPushButton, "pbtPaso")
 
+        # Cartas de la mesa
+        self.label_mesa_carta_1 = self.ui.findChild(QtGui.QLabel, 'lblMesaCarta1')
+        self.label_mesa_carta_2 = self.ui.findChild(QtGui.QLabel, 'lblMesaCarta2')
+        self.label_mesa_carta_3 = self.ui.findChild(QtGui.QLabel, 'lblMesaCarta3')
+        self.label_mesa_carta_4 = self.ui.findChild(QtGui.QLabel, 'lblMesaCarta4')
+        self.label_mesa_carta_5 = self.ui.findChild(QtGui.QLabel, 'lblMesaCarta5')
+
         #
         # Conecta las señales
         #
@@ -73,11 +80,23 @@ class GUI(QtGui.QWidget):
     ##
     def main(self):
         """
-            Método de inicio
+            Método de inicio)
         """
-
+        
+        #
         # Estado inicial del interfaz
+        #
+
+        # Texto para el botón de los pasos
         self.set_paso(self.paso)
+
+        # Cartas de la mesa. El estado inicial es Preflop, es decir, no hay cartas en la mesa
+        self.label_mesa_carta_1.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(0)))
+        self.label_mesa_carta_2.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(0)))
+        self.label_mesa_carta_3.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(0)))
+        self.label_mesa_carta_4.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(0)))
+        self.label_mesa_carta_5.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(0)))
+
 
         # Muestra la ventana principal
         self.ui.show()
