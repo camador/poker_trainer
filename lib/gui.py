@@ -52,6 +52,10 @@ class GUI(QtGui.QWidget):
         self.label_mesa_carta_3 = self.ui.findChild(QtGui.QLabel, 'lblMesaCarta3')
         self.label_mesa_carta_4 = self.ui.findChild(QtGui.QLabel, 'lblMesaCarta4')
         self.label_mesa_carta_5 = self.ui.findChild(QtGui.QLabel, 'lblMesaCarta5')
+        
+        # Cartas del juegador
+        self.label_jugador_carta_1 = self.ui.findChild(QtGui.QLabel, 'lblJugadorCarta1')
+        self.label_jugador_carta_2 = self.ui.findChild(QtGui.QLabel, 'lblJugadorCarta2')
 
         #
         # Conecta las señales
@@ -74,6 +78,9 @@ class GUI(QtGui.QWidget):
         # Número de pasos
         self.num_pasos = len(self.config.PASOS)
 
+        # Cartas del jugador
+        self.jugador_cartas = [None, None]
+
 
     ##
     ## MAIN
@@ -90,12 +97,21 @@ class GUI(QtGui.QWidget):
         # Texto para el botón de los pasos
         self.set_paso(self.paso)
 
-        # Cartas de la mesa. El estado inicial es Preflop, es decir, no hay cartas en la mesa
+        # Cartas de la mesa
+        # El estado inicial es Preflop, es decir, no hay cartas en la mesa
         self.label_mesa_carta_1.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(0)))
         self.label_mesa_carta_2.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(0)))
         self.label_mesa_carta_3.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(0)))
         self.label_mesa_carta_4.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(0)))
         self.label_mesa_carta_5.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(0)))
+
+        # Cartas del jugador
+        # Se generan dos cartas aleatorias
+        self.jugador_cartas[0] = 24 #self.generar_carta()
+        self.jugador_cartas[1] = 38 #self.generar_carta()
+        
+        self.label_jugador_carta_1.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(self.jugador_cartas[0])))
+        self.label_jugador_carta_2.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(self.jugador_cartas[1])))
 
 
         # Muestra la ventana principal
