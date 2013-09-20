@@ -76,6 +76,9 @@ class GUI(QtGui.QWidget):
             Método de inicio
         """
 
+        # Estado inicial del interfaz
+        self.set_paso(self.paso)
+
         # Muestra la ventana principal
         self.ui.show()
 
@@ -115,11 +118,18 @@ class GUI(QtGui.QWidget):
         """
 
         # Fija el texto del botón para el siguiente paso
-        self.pushbutton_paso.setText(self.config.PASOS[self.get_siguiente_paso()])
+        self.set_paso(self.get_siguiente_paso())
     
     ##
     ## MÉTODOS AUXILIARES
     ##
+    def set_paso(self, paso = 0):
+        """
+            Establece el texto del botón de los pasos según el valor del parámetro recibido 
+        """
+        self.pushbutton_paso.setText(self.config.PASOS[paso])
+
+
     def get_siguiente_paso(self):
         """
             Calcula, fija y devuelve el siguiente paso
