@@ -15,10 +15,10 @@ class Config():
     """
 
     # Pasos
-    PASOS = ['PREFLOP', 'FLOP', 'TURN', 'RIVER']
+    PASOS = ('PREFLOP', 'FLOP', 'TURN', 'RIVER')
 
     # Cartas
-    CARTAS = [
+    CARTAS = (
                 {'imagen': 'Blue_Back', 'nombre': 'Reverso'},
 
                 {'imagen': 'ace_of_spades2', 'nombre': 'As'},
@@ -76,7 +76,7 @@ class Config():
                 {'imagen': 'jack_of_clubs2', 'nombre': 'Jc'},
                 {'imagen': 'queen_of_clubs2', 'nombre': 'Qc'},
                 {'imagen': 'king_of_clubs2', 'nombre': 'Kc'}
-            ]
+            )
 
     ##
     ## MÉTODOS
