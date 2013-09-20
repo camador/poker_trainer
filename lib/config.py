@@ -7,6 +7,8 @@
 # Licenciado bajo Creative Commons Reconocimiento 3.0 Unported: http://creativecommons.org/licenses/by/3.0/deed.es_ES
 #
 
+import os
+
 class Config():
     """
         Valores de configuración del juego
@@ -75,6 +77,18 @@ class Config():
                 {'imagen': 'queen_of_clubs', 'nombre': 'Qc'},
                 {'imagen': 'king_of_clubs', 'nombre': 'Kc'}
             ]
+
+    ##
+    ## MÉTODOS
+    ##
+    def get_imagen_carta(self, carta):
+        """
+            Devuelve el nombre, incluyendo la ruta, del fichero correspondiente a la carta
+            con el índice recibido por parámetros
+        """
+        
+        return os.path.join('imagenes', self.CARTAS[carta]['imagen']) + '.png'
+
 
 if __name__ == '__main__':
     print u'Módulo no ejecutable.'
