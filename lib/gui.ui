@@ -23,6 +23,9 @@
       <height>23</height>
      </rect>
     </property>
+    <property name="toolTip">
+     <string>Salir (Esc)</string>
+    </property>
     <property name="text">
      <string>Salir</string>
     </property>
@@ -33,20 +36,75 @@
    <widget class="QWidget" name="layoutWidget_4">
     <property name="geometry">
      <rect>
-      <x>220</x>
-      <y>390</y>
-      <width>158</width>
+      <x>180</x>
+      <y>380</y>
+      <width>230</width>
       <height>41</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_4">
      <item>
-      <widget class="QPushButton" name="pbtPaso">
+      <widget class="QPushButton" name="pbtFuerza5">
+       <property name="toolTip">
+        <string>Muy Fuerte (A)</string>
+       </property>
        <property name="text">
-        <string>FLOP</string>
+        <string>MF</string>
        </property>
        <property name="shortcut">
-        <string>Space</string>
+        <string>A</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pbtFuerza4">
+       <property name="toolTip">
+        <string>Fuerte (S)</string>
+       </property>
+       <property name="text">
+        <string>F</string>
+       </property>
+       <property name="shortcut">
+        <string>S</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pbtFuerza3">
+       <property name="toolTip">
+        <string>Media (D)</string>
+       </property>
+       <property name="text">
+        <string>M</string>
+       </property>
+       <property name="shortcut">
+        <string>D</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pbtFuerza1">
+       <property name="toolTip">
+        <string>Débil (F)</string>
+       </property>
+       <property name="text">
+        <string>D</string>
+       </property>
+       <property name="shortcut">
+        <string>F</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pbtFuerza0">
+       <property name="toolTip">
+        <string>Nada (G)</string>
+       </property>
+       <property name="text">
+        <string>N</string>
+       </property>
+       <property name="shortcut">
+        <string>G</string>
        </property>
       </widget>
      </item>
@@ -313,6 +371,25 @@
      </layout>
     </widget>
    </widget>
+   <widget class="QPushButton" name="pbtPaso">
+    <property name="geometry">
+     <rect>
+      <x>220</x>
+      <y>430</y>
+      <width>156</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Siguiente mano (Espacio)</string>
+    </property>
+    <property name="text">
+     <string>FLOP</string>
+    </property>
+    <property name="shortcut">
+     <string>Space</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QDockWidget" name="dckJugadas">
    <property name="minimumSize">
@@ -363,6 +440,11 @@
   </widget>
  </widget>
  <tabstops>
+  <tabstop>pbtFuerza5</tabstop>
+  <tabstop>pbtFuerza4</tabstop>
+  <tabstop>pbtFuerza3</tabstop>
+  <tabstop>pbtFuerza1</tabstop>
+  <tabstop>pbtFuerza0</tabstop>
   <tabstop>pbtPaso</tabstop>
   <tabstop>lsvJugadas</tabstop>
   <tabstop>pbtSalir</tabstop>
