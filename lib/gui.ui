@@ -364,6 +364,7 @@
  </widget>
  <tabstops>
   <tabstop>pbtPaso</tabstop>
+  <tabstop>lsvJugadas</tabstop>
   <tabstop>pbtSalir</tabstop>
  </tabstops>
  <resources/>
