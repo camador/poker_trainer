@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>816</width>
+    <width>823</width>
     <height>473</height>
    </rect>
   </property>
@@ -334,7 +334,7 @@
     <number>2</number>
    </attribute>
    <widget class="QWidget" name="dockWidgetContents">
-    <widget class="QListWidget" name="lsvJugadas">
+    <widget class="QListView" name="lsvJugadas">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -346,16 +346,6 @@
     </widget>
    </widget>
   </widget>
-  <action name="action_Ayuda">
-   <property name="text">
-    <string>&amp;Ayuda</string>
-   </property>
-  </action>
-  <action name="action_Acerca_de">
-   <property name="text">
-    <string>&amp;Acerca de...</string>
-   </property>
-  </action>
  </widget>
  <tabstops>
   <tabstop>pbtPaso</tabstop>
