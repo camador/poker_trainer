@@ -54,9 +54,15 @@ class GUI(QtGui.QWidget):
         self.label_mesa_carta_4 = self.ui.findChild(QtGui.QLabel, 'lblMesaCarta4')
         self.label_mesa_carta_5 = self.ui.findChild(QtGui.QLabel, 'lblMesaCarta5')
         
-        # Cartas del juegador
+        # Cartas del jugador
         self.label_jugador_carta_1 = self.ui.findChild(QtGui.QLabel, 'lblJugadorCarta1')
         self.label_jugador_carta_2 = self.ui.findChild(QtGui.QLabel, 'lblJugadorCarta2')
+
+        # Lista de jugadas
+        self.dockwidget_jugadas = self.ui.findChild(QtGui.QDockWidget, 'dckJugadas')
+        self.listview_jugadas = self.ui.findChild(QtGui.QListView, 'lsvJugadas')
+        self.model_jugadas = QtGui.QStandardItemModel(self.listview_jugadas)
+        self.listview_jugadas.setModel(self.model_jugadas)
 
         #
         # Conecta las señales
@@ -226,7 +232,35 @@ class GUI(QtGui.QWidget):
         
         # Y la muestra
         self.label_mesa_carta_5.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(self.cartas_mesa[4])))
-           
+    
+        #
+        # Actualiza la lista de jugadas
+        #
+
+        # Número de jugadas de la lista. En este momento todavía no ha sido añadida la jugada actual.
+        num_jugadas = str(self.model_jugadas.rowCount() + 1)
+        
+        # Formato del item: 
+        #
+        #  Nº de jugada - Cartas del jugador - Cartas de la mesa
+        #  1 - Ks 3h - Jc Ad 3s 7c Kh
+        jugada = num_jugadas + ' - '
+        jugada += self.config.CARTAS[self.cartas_jugador[0]]['nombre'] + ' '
+        jugada += self.config.CARTAS[self.cartas_jugador[1]]['nombre']
+        jugada += ' - '
+        jugada += self.config.CARTAS[self.cartas_mesa[0]]['nombre'] + ' '
+        jugada += self.config.CARTAS[self.cartas_mesa[1]]['nombre'] + ' '
+        jugada += self.config.CARTAS[self.cartas_mesa[2]]['nombre'] + ' '
+        jugada += self.config.CARTAS[self.cartas_mesa[3]]['nombre'] + ' '
+        jugada += self.config.CARTAS[self.cartas_mesa[4]]['nombre']
+
+        # Crea el item y lo añade a la lista
+        item = QtGui.QStandardItem(jugada)
+        self.model_jugadas.appendRow(item)
+
+        # Actualiza el título de la lista con el contador de jugadas
+        self.dockwidget_jugadas.setWindowTitle('Jugadas (' + num_jugadas + ')')
+
     
     ##
     ## MÉTODOS AUXILIARES
