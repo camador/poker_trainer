@@ -83,7 +83,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pbtFuerza1">
+      <widget class="QPushButton" name="pbtFuerza2">
        <property name="toolTip">
         <string>Débil (F)</string>
        </property>
@@ -96,7 +96,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pbtFuerza0">
+      <widget class="QPushButton" name="pbtFuerza1">
        <property name="toolTip">
         <string>Nada (G)</string>
        </property>
@@ -443,8 +443,8 @@
   <tabstop>pbtFuerza5</tabstop>
   <tabstop>pbtFuerza4</tabstop>
   <tabstop>pbtFuerza3</tabstop>
+  <tabstop>pbtFuerza2</tabstop>
   <tabstop>pbtFuerza1</tabstop>
-  <tabstop>pbtFuerza0</tabstop>
   <tabstop>pbtPaso</tabstop>
   <tabstop>lsvJugadas</tabstop>
   <tabstop>pbtSalir</tabstop>
