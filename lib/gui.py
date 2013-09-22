@@ -25,6 +25,35 @@ class GUI(QtGui.QWidget):
 
     def __init__(self):
 
+        #
+        # Configuración
+        #
+        self.config = Config()
+
+        # Paso actual
+        self.paso = 0
+
+        # Número de pasos
+        self.num_pasos = len(self.config.PASOS)
+
+        # Fuerzas de las jugadas
+        # Las fuerzas de cada jugada (fuerzas) se guarda en fuerzas_jugadas
+        self.fuerzas = [0, 0, 0, 0]
+        self.fuerzas_jugadas = list()
+
+        # Cartas de la mesa
+        self.cartas_mesa = list()
+
+        # Cartas del jugador
+        self.cartas_jugador = list()
+
+        # Cartas repartidas
+        self.cartas_repartidas = list()
+
+        #
+        # GUI
+        #
+
         # Antes de nada crea el objeto 'aplicación' de Qt
         self.app = QtGui.QApplication(sys.argv)
 
@@ -42,10 +71,17 @@ class GUI(QtGui.QWidget):
         #
 
         # Botón Salir
-        self.pushbutton_salir = self.ui.findChild(QtGui.QPushButton, "pbtSalir")
+        self.pushbutton_salir = self.ui.findChild(QtGui.QPushButton, 'pbtSalir')
 
         # Botón Paso
-        self.pushbutton_paso = self.ui.findChild(QtGui.QPushButton, "pbtPaso")
+        self.pushbutton_paso = self.ui.findChild(QtGui.QPushButton, 'pbtPaso')
+
+        # Botones para la fuerza de la jugada
+        self.pushbutton_fuerza5 = self.ui.findChild(QtGui.QPushButton, 'pbtFuerza5')
+        self.pushbutton_fuerza4 = self.ui.findChild(QtGui.QPushButton, 'pbtFuerza4')
+        self.pushbutton_fuerza3 = self.ui.findChild(QtGui.QPushButton, 'pbtFuerza3')
+        self.pushbutton_fuerza2 = self.ui.findChild(QtGui.QPushButton, 'pbtFuerza2')
+        self.pushbutton_fuerza1 = self.ui.findChild(QtGui.QPushButton, 'pbtFuerza1')
 
         # Cartas de la mesa
         self.label_mesa_carta_1 = self.ui.findChild(QtGui.QLabel, 'lblMesaCarta1')
@@ -74,25 +110,13 @@ class GUI(QtGui.QWidget):
         # Botón Paso
         self.pushbutton_paso.clicked.connect(self.on_paso)
 
-        #
-        # Configuración
-        #
-        self.config = Config()
-
-        # Paso actual
-        self.paso = 0
-
-        # Número de pasos
-        self.num_pasos = len(self.config.PASOS)
-
-        # Cartas de la mesa
-        self.cartas_mesa = list()
-
-        # Cartas del jugador
-        self.cartas_jugador = list()
-
-        # Cartas repartidas
-        self.cartas_repartidas = list()
+        # Botones para la fuerza de la jugada
+        # lambda porque la función tiene parámetros
+        self.pushbutton_fuerza5.clicked.connect(lambda: self.on_fuerza(5))
+        self.pushbutton_fuerza4.clicked.connect(lambda: self.on_fuerza(4))
+        self.pushbutton_fuerza3.clicked.connect(lambda: self.on_fuerza(3))
+        self.pushbutton_fuerza2.clicked.connect(lambda: self.on_fuerza(2))
+        self.pushbutton_fuerza1.clicked.connect(lambda: self.on_fuerza(1))
 
 
     ##
@@ -261,7 +285,21 @@ class GUI(QtGui.QWidget):
         # Actualiza el título de la lista con el contador de jugadas
         self.dockwidget_jugadas.setWindowTitle('Jugadas (' + num_jugadas + ')')
 
-    
+        # Guarda las fuerzas de la jugada
+        self.fuerzas_jugadas.insert(int(num_jugadas), self.fuerzas)
+        self.fuerzas = [0, 0, 0, 0]
+
+    ##
+    ## FUERZA
+    ##
+    def on_fuerza(self, fuerza):
+        """
+            Establece la fuerza de la jugada para el paso actual
+        """
+
+        # Fuerza asignada al paso anterior
+        self.fuerzas[self.paso - 1] = fuerza
+
     ##
     ## MÉTODOS AUXILIARES
     ##
