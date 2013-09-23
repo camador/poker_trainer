@@ -94,6 +94,11 @@ class GUI(QtGui.QWidget):
         self.label_jugador_carta_1 = self.ui.findChild(QtGui.QLabel, 'lblJugadorCarta1')
         self.label_jugador_carta_2 = self.ui.findChild(QtGui.QLabel, 'lblJugadorCarta2')
 
+        # Indicadores de la fuerza de las jugadas
+        self.label_fuerza_flop = self.ui.findChild(QtGui.QLabel, 'lblFuerzaFlop')
+        self.label_fuerza_turn = self.ui.findChild(QtGui.QLabel, 'lblFuerzaTurn')
+        self.label_fuerza_river = self.ui.findChild(QtGui.QLabel, 'lblFuerzaRiver')
+
         # Lista de jugadas
         self.dockwidget_jugadas = self.ui.findChild(QtGui.QDockWidget, 'dckJugadas')
         self.listview_jugadas = self.ui.findChild(QtGui.QListView, 'lsvJugadas')
@@ -207,12 +212,17 @@ class GUI(QtGui.QWidget):
             self.fuerzas_jugadas.insert(num_jugadas, self.fuerzas)
             self.fuerzas = [0, 0, 0, 0]
 
-        # Desactiva los botones de la fuerza porque hasta el flop no puede pulsarse
+        # Desactiva los botones de la fuerza porque hasta el flop no pueden pulsarse
         self.pushbutton_fuerza5.setEnabled(False)
         self.pushbutton_fuerza4.setEnabled(False)
         self.pushbutton_fuerza3.setEnabled(False)
         self.pushbutton_fuerza2.setEnabled(False)
         self.pushbutton_fuerza1.setEnabled(False)
+
+        # Oculta los indicadores de fuerza
+        self.label_fuerza_flop.hide()
+        self.label_fuerza_turn.hide()
+        self.label_fuerza_river.hide()
 
         # Se recogen y barajan todas las cartas
         self.cartas_mesa = list()
@@ -315,6 +325,20 @@ class GUI(QtGui.QWidget):
 
         # Fuerza asignada al paso anterior
         self.fuerzas[self.paso] = fuerza
+
+        # Fija el color del indicador correspondiente en función de la fuerza seleccionada y
+        # lo muestra
+        if self.paso == 1:
+            self.label_fuerza_flop.setStyleSheet(self.config.ESTILOS_FUERZA[fuerza])
+            self.label_fuerza_flop.show()
+
+        elif self.paso == 2:
+            self.label_fuerza_turn.setStyleSheet(self.config.ESTILOS_FUERZA[fuerza])
+            self.label_fuerza_turn.show()
+
+        else:
+            self.label_fuerza_river.setStyleSheet(self.config.ESTILOS_FUERZA[fuerza])
+            self.label_fuerza_river.show()
 
     ##
     ## MÉTODOS AUXILIARES
