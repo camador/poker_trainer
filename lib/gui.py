@@ -201,6 +201,12 @@ class GUI(QtGui.QWidget):
             Dos cartas para el jugador, ninguna en la mesa 
         """
 
+        # Guarda las fuerzas de la anterior jugada, si la hay
+        num_jugadas = self.model_jugadas.rowCount()
+        if num_jugadas > 0:
+            self.fuerzas_jugadas.insert(num_jugadas, self.fuerzas)
+            self.fuerzas = [0, 0, 0, 0]
+
         # Se recogen y barajan todas las cartas
         self.cartas_mesa = list()
         self.cartas_jugador = list()
@@ -285,10 +291,6 @@ class GUI(QtGui.QWidget):
         # Actualiza el título de la lista con el contador de jugadas
         self.dockwidget_jugadas.setWindowTitle('Jugadas (' + num_jugadas + ')')
 
-        # Guarda las fuerzas de la jugada
-        self.fuerzas_jugadas.insert(int(num_jugadas), self.fuerzas)
-        self.fuerzas = [0, 0, 0, 0]
-
     ##
     ## FUERZA
     ##
@@ -298,7 +300,7 @@ class GUI(QtGui.QWidget):
         """
 
         # Fuerza asignada al paso anterior
-        self.fuerzas[self.paso - 1] = fuerza
+        self.fuerzas[self.paso] = fuerza
 
     ##
     ## MÉTODOS AUXILIARES
