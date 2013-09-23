@@ -328,17 +328,17 @@ class GUI(QtGui.QWidget):
 
         # Fija el color del indicador correspondiente en función de la fuerza seleccionada y
         # lo muestra
-        if self.paso == 1:
-            self.label_fuerza_flop.setStyleSheet(self.config.ESTILOS_FUERZA[fuerza])
-            self.label_fuerza_flop.show()
-
-        elif self.paso == 2:
-            self.label_fuerza_turn.setStyleSheet(self.config.ESTILOS_FUERZA[fuerza])
-            self.label_fuerza_turn.show()
-
-        else:
-            self.label_fuerza_river.setStyleSheet(self.config.ESTILOS_FUERZA[fuerza])
-            self.label_fuerza_river.show()
+        #if self.paso == 1:
+        #    self.label_fuerza_flop.setStyleSheet(self.config.ESTILOS_FUERZA[fuerza])
+        #    self.label_fuerza_flop.show()
+        #
+        #elif self.paso == 2:
+        #    self.label_fuerza_turn.setStyleSheet(self.config.ESTILOS_FUERZA[fuerza])
+        #    self.label_fuerza_turn.show()
+        #
+        #else:
+        #    self.label_fuerza_river.setStyleSheet(self.config.ESTILOS_FUERZA[fuerza])
+        #    self.label_fuerza_river.show()
 
     ##
     ## MÉTODOS AUXILIARES
