@@ -30,13 +30,5 @@ class Jugador:
         # 5 - Mano Muy Fuerte (MMF)
         self.valoracion = [0, 0, 0, 0]
 
-    def inicializa_valoracion(self):
-        """
-            Inicializa la valoración de fuerza de la jugada
-        """
-
-        self.valoracion = [0, 0, 0, 0]
-    
-
 if __name__ == '__main__':
     print u'Módulo no ejecutable.'
