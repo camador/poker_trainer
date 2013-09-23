@@ -78,6 +78,23 @@ class Config():
                 {'imagen': 'king_of_clubs2', 'nombre': 'Kc'}
             )
 
+    # Aspecto de los indicadores de fuerza de las jugadas
+    # No se otorgó fuerza: Negro
+    # Nada: Blanco
+    # Mano débil: Azul claro
+    # .
+    # .
+    # .
+    # Mano muy fuerte: Azul oscuro
+    ESTILOS_FUERZA = (
+                'background: #000; border: 1px solid black;',
+                'background: #fff; border: 1px solid black;',
+                'background: #cfefff; border: 1px solid black;',
+                'background: #70bde7; border: 1px solid black;',
+                'background: #0971b8; border: 1px solid black;',
+                'background: #001d5a; border: 1px solid black;'
+            )
+
     ##
     ## MÉTODOS
     ##
