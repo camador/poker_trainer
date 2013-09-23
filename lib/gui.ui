@@ -48,6 +48,9 @@
        <property name="toolTip">
         <string>Nada (G)</string>
        </property>
+       <property name="styleSheet">
+        <string notr="true">background: #fff;</string>
+       </property>
        <property name="text">
         <string>N</string>
        </property>
@@ -60,6 +63,9 @@
       <widget class="QPushButton" name="pbtFuerza3">
        <property name="toolTip">
         <string>Mano Media (D)</string>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background: #70bde7;</string>
        </property>
        <property name="text">
         <string>MM</string>
@@ -74,6 +80,9 @@
        <property name="toolTip">
         <string>Mano Fuerte (S)</string>
        </property>
+       <property name="styleSheet">
+        <string notr="true">background: #0971b8</string>
+       </property>
        <property name="text">
         <string>MF</string>
        </property>
@@ -86,6 +95,9 @@
       <widget class="QPushButton" name="pbtFuerza5">
        <property name="toolTip">
         <string>Mano Muy Fuerte (A)</string>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background: #001d5a; color: #fff;</string>
        </property>
        <property name="text">
         <string>MMF</string>
@@ -100,91 +112,14 @@
        <property name="toolTip">
         <string>Mano Débil (F)</string>
        </property>
+       <property name="styleSheet">
+        <string notr="true">background: #cfefff;</string>
+       </property>
        <property name="text">
         <string>MD</string>
        </property>
        <property name="shortcut">
         <string>F</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="2">
-      <widget class="QLabel" name="lblFuerzaRiver_2">
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>5</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background: #70bde7; border: 1px solid black;</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="lblFuerzaFlop_2">
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>5</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background: #001d5a; border: 1px solid black;</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QLabel" name="lblFuerzaTurn_2">
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>5</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background: #0971b8; border: 1px solid black;</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="3">
-      <widget class="QLabel" name="lblFuerzaTurn_3">
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>5</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background: #cfefff; border: 1px solid black;</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="4">
-      <widget class="QLabel" name="lblFuerzaTurn_4">
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>5</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background: #fff; border: 1px solid black;</string>
-       </property>
-       <property name="text">
-        <string/>
        </property>
       </widget>
      </item>
