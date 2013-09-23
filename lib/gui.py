@@ -207,6 +207,13 @@ class GUI(QtGui.QWidget):
             self.fuerzas_jugadas.insert(num_jugadas, self.fuerzas)
             self.fuerzas = [0, 0, 0, 0]
 
+        # Desactiva los botones de la fuerza porque hasta el flop no puede pulsarse
+        self.pushbutton_fuerza5.setEnabled(False)
+        self.pushbutton_fuerza4.setEnabled(False)
+        self.pushbutton_fuerza3.setEnabled(False)
+        self.pushbutton_fuerza2.setEnabled(False)
+        self.pushbutton_fuerza1.setEnabled(False)
+
         # Se recogen y barajan todas las cartas
         self.cartas_mesa = list()
         self.cartas_jugador = list()
@@ -230,6 +237,13 @@ class GUI(QtGui.QWidget):
         """ 
             Tres cartas en la mesa
         """ 
+
+        # Activa los botones de la fuerza
+        self.pushbutton_fuerza5.setEnabled(True)
+        self.pushbutton_fuerza4.setEnabled(True)
+        self.pushbutton_fuerza3.setEnabled(True)
+        self.pushbutton_fuerza2.setEnabled(True)
+        self.pushbutton_fuerza1.setEnabled(True)
 
         # Genera las cartas
         self.cartas_mesa.insert(0, self.generar_carta())
