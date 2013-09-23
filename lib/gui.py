@@ -293,12 +293,12 @@ class GUI(QtGui.QWidget):
         self.label_mesa_carta_5.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(mesa.cartas[4])))
 
         # Muestra la valoración de fuerza
-        valoraciones = self.jugador.valoracion
-        self.label_fuerza_flop.setStyleSheet(self.config.ESTILOS_FUERZA[valoraciones[1]])
+        valoracion = jugador.valoracion
+        self.label_fuerza_flop.setStyleSheet(self.config.ESTILOS_FUERZA[valoracion[1]])
         self.label_fuerza_flop.show()
-        self.label_fuerza_turn.setStyleSheet(self.config.ESTILOS_FUERZA[valoraciones[2]])
+        self.label_fuerza_turn.setStyleSheet(self.config.ESTILOS_FUERZA[valoracion[2]])
         self.label_fuerza_turn.show()
-        self.label_fuerza_river.setStyleSheet(self.config.ESTILOS_FUERZA[valoraciones[3]])
+        self.label_fuerza_river.setStyleSheet(self.config.ESTILOS_FUERZA[valoracion[3]])
         self.label_fuerza_river.show()
 
 
@@ -359,7 +359,7 @@ class GUI(QtGui.QWidget):
             #
             # Lista de jugadas (list)
             #
-            self.lista_jugadas.insert(num_jugadas, [self.jugador, self.mesa])
+            self.lista_jugadas.append([self.jugador, self.mesa])
 
         #
         # Prepara los widgets para una nueva ronda
