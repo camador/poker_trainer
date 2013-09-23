@@ -41,6 +41,9 @@ class GUI(QtGui.QWidget):
         self.fuerzas = [0, 0, 0, 0]
         self.fuerzas_jugadas = list()
 
+        # Lista de jugadas
+        self.lista_jugadas = list()
+
         # Cartas de la mesa
         self.cartas_mesa = list()
 
@@ -122,6 +125,9 @@ class GUI(QtGui.QWidget):
         self.pushbutton_fuerza3.clicked.connect(lambda: self.on_fuerza(3))
         self.pushbutton_fuerza2.clicked.connect(lambda: self.on_fuerza(2))
         self.pushbutton_fuerza1.clicked.connect(lambda: self.on_fuerza(1))
+
+        # Lista de jugadas
+        self.listview_jugadas.clicked.connect(self.on_jugada_clicked)
 
 
     ##
@@ -206,35 +212,8 @@ class GUI(QtGui.QWidget):
             Dos cartas para el jugador, ninguna en la mesa 
         """
 
-        # Guarda las fuerzas de la anterior jugada, si la hay
-        num_jugadas = self.model_jugadas.rowCount()
-        if num_jugadas > 0:
-            self.fuerzas_jugadas.insert(num_jugadas, self.fuerzas)
-            self.fuerzas = [0, 0, 0, 0]
-
-        # Desactiva los botones de la fuerza porque hasta el flop no pueden pulsarse
-        self.pushbutton_fuerza5.setEnabled(False)
-        self.pushbutton_fuerza4.setEnabled(False)
-        self.pushbutton_fuerza3.setEnabled(False)
-        self.pushbutton_fuerza2.setEnabled(False)
-        self.pushbutton_fuerza1.setEnabled(False)
-
-        # Oculta los indicadores de fuerza
-        self.label_fuerza_flop.hide()
-        self.label_fuerza_turn.hide()
-        self.label_fuerza_river.hide()
-
-        # Se recogen y barajan todas las cartas
-        self.cartas_mesa = list()
-        self.cartas_jugador = list()
-        self.cartas_repartidas = list()
-    
-        # Cartas de la mesa
-        self.label_mesa_carta_1.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(0)))
-        self.label_mesa_carta_2.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(0)))
-        self.label_mesa_carta_3.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(0)))
-        self.label_mesa_carta_4.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(0)))
-        self.label_mesa_carta_5.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(0)))
+        # Inicializa la mesa
+        self.inicializa_mesa()
 
         # Cartas del jugador
         self.cartas_jugador.insert(0, self.generar_carta())
@@ -247,13 +226,9 @@ class GUI(QtGui.QWidget):
         """ 
             Tres cartas en la mesa
         """ 
-
-        # Activa los botones de la fuerza
-        self.pushbutton_fuerza5.setEnabled(True)
-        self.pushbutton_fuerza4.setEnabled(True)
-        self.pushbutton_fuerza3.setEnabled(True)
-        self.pushbutton_fuerza2.setEnabled(True)
-        self.pushbutton_fuerza1.setEnabled(True)
+        
+        # Activa los botones para la fuerza
+        self.activa_botones_fuerza(True)
 
         # Genera las cartas
         self.cartas_mesa.insert(0, self.generar_carta())
@@ -287,33 +262,6 @@ class GUI(QtGui.QWidget):
         # Y la muestra
         self.label_mesa_carta_5.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(self.cartas_mesa[4])))
     
-        #
-        # Actualiza la lista de jugadas
-        #
-
-        # Número de jugadas de la lista. En este momento todavía no ha sido añadida la jugada actual.
-        num_jugadas = str(self.model_jugadas.rowCount() + 1)
-        
-        # Formato del item: 
-        #
-        #  Nº de jugada - Cartas del jugador - Cartas de la mesa
-        #  1 - Ks 3h - Jc Ad 3s 7c Kh
-        jugada = num_jugadas + ' - '
-        jugada += self.config.CARTAS[self.cartas_jugador[0]]['nombre'] + ' '
-        jugada += self.config.CARTAS[self.cartas_jugador[1]]['nombre']
-        jugada += ' - '
-        jugada += self.config.CARTAS[self.cartas_mesa[0]]['nombre'] + ' '
-        jugada += self.config.CARTAS[self.cartas_mesa[1]]['nombre'] + ' '
-        jugada += self.config.CARTAS[self.cartas_mesa[2]]['nombre'] + ' '
-        jugada += self.config.CARTAS[self.cartas_mesa[3]]['nombre'] + ' '
-        jugada += self.config.CARTAS[self.cartas_mesa[4]]['nombre']
-
-        # Crea el item y lo añade a la lista
-        item = QtGui.QStandardItem(jugada)
-        self.model_jugadas.appendRow(item)
-
-        # Actualiza el título de la lista con el contador de jugadas
-        self.dockwidget_jugadas.setWindowTitle('Jugadas (' + num_jugadas + ')')
 
     ##
     ## FUERZA
@@ -326,19 +274,46 @@ class GUI(QtGui.QWidget):
         # Fuerza asignada al paso anterior
         self.fuerzas[self.paso] = fuerza
 
-        # Fija el color del indicador correspondiente en función de la fuerza seleccionada y
-        # lo muestra
-        #if self.paso == 1:
-        #    self.label_fuerza_flop.setStyleSheet(self.config.ESTILOS_FUERZA[fuerza])
-        #    self.label_fuerza_flop.show()
-        #
-        #elif self.paso == 2:
-        #    self.label_fuerza_turn.setStyleSheet(self.config.ESTILOS_FUERZA[fuerza])
-        #    self.label_fuerza_turn.show()
-        #
-        #else:
-        #    self.label_fuerza_river.setStyleSheet(self.config.ESTILOS_FUERZA[fuerza])
-        #    self.label_fuerza_river.show()
+
+    ##
+    ## LISTA
+    ##
+    @QtCore.pyqtSlot(QtGui.QStandardItemModel)
+    def on_jugada_clicked(self, model_index):
+        """
+            Muestra en la mesa la jugada seleccionada con su valoración de fuerza
+            correspondiente
+        """
+
+        # Limpia la mesa y fuerza a Preflop el siguiente paso (simulando encontrarse en River)
+        self.inicializa_mesa()
+        self.paso = 2
+        self.set_paso(self.get_siguiente_paso())
+
+        # Obtiene índice de la fila seleccionada
+        jugada = model_index.row()
+
+        # Muestra las cartas del jugador y la mesa
+        cartas_jugador = self.lista_jugadas[jugada][0]
+        self.label_jugador_carta_1.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(cartas_jugador[0])))
+        self.label_jugador_carta_2.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(cartas_jugador[1])))
+
+        cartas_mesa = self.lista_jugadas[jugada][1]
+        self.label_mesa_carta_1.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(cartas_mesa[0])))
+        self.label_mesa_carta_2.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(cartas_mesa[1])))
+        self.label_mesa_carta_3.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(cartas_mesa[2])))
+        self.label_mesa_carta_4.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(cartas_mesa[3])))
+        self.label_mesa_carta_5.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(cartas_mesa[4])))
+
+        # Muestra la valoración de fuerza
+        fuerzas = self.fuerzas_jugadas[jugada]
+        self.label_fuerza_flop.setStyleSheet(self.config.ESTILOS_FUERZA[fuerzas[1]])
+        self.label_fuerza_flop.show()
+        self.label_fuerza_turn.setStyleSheet(self.config.ESTILOS_FUERZA[fuerzas[2]])
+        self.label_fuerza_turn.show()
+        self.label_fuerza_river.setStyleSheet(self.config.ESTILOS_FUERZA[fuerzas[3]])
+        self.label_fuerza_river.show()
+
 
     ##
     ## MÉTODOS AUXILIARES
@@ -387,7 +362,103 @@ class GUI(QtGui.QWidget):
                 self.cartas_repartidas.append(carta)
 
         return carta 
+
+    def inicializa_mesa(self):
+        """
+            Prepara la mesa para iniciar una nueva ronda:
+            - Guarda la información de la ronda anterior
+            - Limpia la mesa 
+        """
+    
+        # Si se trata de la primera ronda tras ejecutar el programa la quinta carta de la mesa
+        # no existirá porque no habrá habido todavía ningún River. En caso contrario realiza las
+        # siguientes acciones con la última jugada:
+        # 
+        # - Actualiza la lista de jugadas de la pantalla
+        # - Actualiza la lista de las jugadas (list)
+        # - Guarda las fuerzas asignadas 
+        if len(self.cartas_mesa) == 5: 
+
+            #
+            # Lista de judadas de pantalla
+            #
+
+            # Número de jugadas de la lista. En este momento todavía no ha sido añadida la jugada actual.
+            num_jugadas = self.model_jugadas.rowCount() + 1
+            
+            # Formato del item: 
+            #
+            #  Nº de jugada - Cartas del jugador - Cartas de la mesa
+            #  1 - Ks 3h - Jc Ad 3s 7c Kh
+            jugada = str(num_jugadas) + ' - '
+            jugada += self.config.CARTAS[self.cartas_jugador[0]]['nombre'] + ' '
+            jugada += self.config.CARTAS[self.cartas_jugador[1]]['nombre']
+            jugada += ' - '
+            jugada += self.config.CARTAS[self.cartas_mesa[0]]['nombre'] + ' '
+            jugada += self.config.CARTAS[self.cartas_mesa[1]]['nombre'] + ' '
+            jugada += self.config.CARTAS[self.cartas_mesa[2]]['nombre'] + ' '
+            jugada += self.config.CARTAS[self.cartas_mesa[3]]['nombre'] + ' '
+            jugada += self.config.CARTAS[self.cartas_mesa[4]]['nombre']
+
+            # Crea el item y lo añade a la lista
+            item = QtGui.QStandardItem(jugada)
+            self.model_jugadas.appendRow(item)
+
+            # Actualiza el título de la lista con el contador de jugadas
+            self.dockwidget_jugadas.setWindowTitle('Jugadas ({0})'.format(num_jugadas))
+
+            #
+            # Lista de jugadas (list)
+            #
+            self.lista_jugadas.insert(num_jugadas, [self.cartas_jugador, self.cartas_mesa])
+
+            #
+            # Fuerzas
+            #
+
+            # Guarda las fuerzas de la anterior jugada
+            self.fuerzas_jugadas.insert(num_jugadas, self.fuerzas)
+            self.fuerzas = [0, 0, 0, 0]
+
+        #
+        # Prepara los widgets para una nueva ronda
+        #
+
+        # Desactiva los botones de la fuerza porque hasta el flop no pueden pulsarse
+        self.activa_botones_fuerza(False)
+
+        # Oculta los indicadores de fuerza
+        self.label_fuerza_flop.hide()
+        self.label_fuerza_turn.hide()
+        self.label_fuerza_river.hide()
         
+        #
+        # Limpia la mesa
+        # 
+
+        # Se recogen y barajan todas las cartas
+        self.cartas_mesa = list()
+        self.cartas_jugador = list()
+        self.cartas_repartidas = list()
+    
+        # Cartas de la mesa
+        self.label_mesa_carta_1.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(0)))
+        self.label_mesa_carta_2.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(0)))
+        self.label_mesa_carta_3.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(0)))
+        self.label_mesa_carta_4.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(0)))
+        self.label_mesa_carta_5.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(0)))
+
+    def activa_botones_fuerza(self, activar = True):
+        """
+            Activa o desactiva los botones de la fuerza
+        """
+
+        self.pushbutton_fuerza5.setEnabled(activar)
+        self.pushbutton_fuerza4.setEnabled(activar)
+        self.pushbutton_fuerza3.setEnabled(activar)
+        self.pushbutton_fuerza2.setEnabled(activar)
+        self.pushbutton_fuerza1.setEnabled(activar)
+    
 
 if __name__ == '__main__':
     print u'Módulo no ejecutable.'
