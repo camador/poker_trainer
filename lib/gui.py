@@ -10,13 +10,15 @@
 # PyQt
 from PyQt4 import uic, QtGui, QtCore
 
-# Config
+# Póker
 from lib.config import Config 
+from lib.jugador import Jugador
+from lib.mesa import Mesa
+from lib.crupier import Crupier
 
 # Otros
 import sys
 import os
-from random import randint
 
 class GUI(QtGui.QWidget):
     """
@@ -30,28 +32,13 @@ class GUI(QtGui.QWidget):
         #
         self.config = Config()
 
-        # Paso actual
-        self.paso = 0
-
-        # Número de pasos
-        self.num_pasos = len(self.config.PASOS)
-
-        # Fuerzas de las jugadas
-        # Las fuerzas de cada jugada (fuerzas) se guarda en fuerzas_jugadas
-        self.fuerzas = [0, 0, 0, 0]
-        self.fuerzas_jugadas = list()
+        # Instancia los objetos del jugador, mesa y crupier
+        self.jugador = Jugador()
+        self.mesa = Mesa()
+        self.crupier = Crupier(self.config)
 
         # Lista de jugadas
         self.lista_jugadas = list()
-
-        # Cartas de la mesa
-        self.cartas_mesa = list()
-
-        # Cartas del jugador
-        self.cartas_jugador = list()
-
-        # Cartas repartidas
-        self.cartas_repartidas = list()
 
         #
         # GUI
@@ -143,7 +130,7 @@ class GUI(QtGui.QWidget):
         #
 
         # Texto para el botón de los pasos
-        self.set_paso(self.paso)
+        self.set_paso(self.crupier.paso)
 
         # Primer paso: preflop
         self.preflop()
@@ -193,15 +180,15 @@ class GUI(QtGui.QWidget):
         """
 
         # Establece el siguiente paso y fija el texto correspondiente para el botón de los pasos
-        self.set_paso(self.get_siguiente_paso())
+        self.set_paso(self.crupier.siguiente_paso())
 
-        if self.paso == 1:
+        if self.crupier.paso == 1:
             self.flop()
 
-        elif self.paso == 2:
+        elif self.crupier.paso == 2:
             self.turn()
 
-        elif self.paso == 3:
+        elif self.crupier.paso == 3:
             self.river()
 
         else:
@@ -216,11 +203,11 @@ class GUI(QtGui.QWidget):
         self.inicializa_mesa()
 
         # Cartas del jugador
-        self.cartas_jugador.insert(0, self.generar_carta())
-        self.cartas_jugador.insert(1, self.generar_carta())
+        self.jugador.cartas.insert(0, self.crupier.repartir_carta())
+        self.jugador.cartas.insert(1, self.crupier.repartir_carta())
         
-        self.label_jugador_carta_1.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(self.cartas_jugador[0])))
-        self.label_jugador_carta_2.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(self.cartas_jugador[1])))
+        self.label_jugador_carta_1.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(self.jugador.cartas[0])))
+        self.label_jugador_carta_2.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(self.jugador.cartas[1])))
 
     def flop(self):
         """ 
@@ -231,14 +218,14 @@ class GUI(QtGui.QWidget):
         self.activa_botones_fuerza(True)
 
         # Genera las cartas
-        self.cartas_mesa.insert(0, self.generar_carta())
-        self.cartas_mesa.insert(1, self.generar_carta())
-        self.cartas_mesa.insert(2, self.generar_carta())
+        self.mesa.cartas.insert(0, self.crupier.repartir_carta())
+        self.mesa.cartas.insert(1, self.crupier.repartir_carta())
+        self.mesa.cartas.insert(2, self.crupier.repartir_carta())
         
         # Y las muestras
-        self.label_mesa_carta_1.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(self.cartas_mesa[0])))
-        self.label_mesa_carta_2.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(self.cartas_mesa[1])))
-        self.label_mesa_carta_3.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(self.cartas_mesa[2])))
+        self.label_mesa_carta_1.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(self.mesa.cartas[0])))
+        self.label_mesa_carta_2.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(self.mesa.cartas[1])))
+        self.label_mesa_carta_3.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(self.mesa.cartas[2])))
 
     def turn(self):
         """ 
@@ -246,10 +233,10 @@ class GUI(QtGui.QWidget):
         """ 
 
         # Genera la carta
-        self.cartas_mesa.insert(3, self.generar_carta())
+        self.mesa.cartas.insert(3, self.crupier.repartir_carta())
         
         # Y la muestra
-        self.label_mesa_carta_4.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(self.cartas_mesa[3])))
+        self.label_mesa_carta_4.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(self.mesa.cartas[3])))
 
     def river(self):
         """ 
@@ -257,10 +244,10 @@ class GUI(QtGui.QWidget):
         """ 
 
         # Genera la carta
-        self.cartas_mesa.insert(4, self.generar_carta())
+        self.mesa.cartas.insert(4, self.crupier.repartir_carta())
         
         # Y la muestra
-        self.label_mesa_carta_5.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(self.cartas_mesa[4])))
+        self.label_mesa_carta_5.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(self.mesa.cartas[4])))
     
 
     ##
@@ -272,7 +259,7 @@ class GUI(QtGui.QWidget):
         """
 
         # Fuerza asignada al paso anterior
-        self.fuerzas[self.paso] = fuerza
+        self.jugador.valoracion[self.crupier.paso] = fuerza
 
 
     ##
@@ -287,31 +274,31 @@ class GUI(QtGui.QWidget):
 
         # Limpia la mesa y fuerza a Preflop el siguiente paso (simulando encontrarse en River)
         self.inicializa_mesa()
-        self.paso = 2
-        self.set_paso(self.get_siguiente_paso())
+        self.crupier.paso = 2
+        self.set_paso(self.crupier.siguiente_paso())
 
         # Obtiene índice de la fila seleccionada
         jugada = model_index.row()
 
         # Muestra las cartas del jugador y la mesa
-        cartas_jugador = self.lista_jugadas[jugada][0]
-        self.label_jugador_carta_1.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(cartas_jugador[0])))
-        self.label_jugador_carta_2.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(cartas_jugador[1])))
+        jugador = self.lista_jugadas[jugada][0]
+        self.label_jugador_carta_1.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(jugador.cartas[0])))
+        self.label_jugador_carta_2.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(jugador.cartas[1])))
 
-        cartas_mesa = self.lista_jugadas[jugada][1]
-        self.label_mesa_carta_1.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(cartas_mesa[0])))
-        self.label_mesa_carta_2.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(cartas_mesa[1])))
-        self.label_mesa_carta_3.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(cartas_mesa[2])))
-        self.label_mesa_carta_4.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(cartas_mesa[3])))
-        self.label_mesa_carta_5.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(cartas_mesa[4])))
+        mesa = self.lista_jugadas[jugada][1]
+        self.label_mesa_carta_1.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(mesa.cartas[0])))
+        self.label_mesa_carta_2.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(mesa.cartas[1])))
+        self.label_mesa_carta_3.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(mesa.cartas[2])))
+        self.label_mesa_carta_4.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(mesa.cartas[3])))
+        self.label_mesa_carta_5.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(mesa.cartas[4])))
 
         # Muestra la valoración de fuerza
-        fuerzas = self.fuerzas_jugadas[jugada]
-        self.label_fuerza_flop.setStyleSheet(self.config.ESTILOS_FUERZA[fuerzas[1]])
+        valoraciones = self.jugador.valoracion
+        self.label_fuerza_flop.setStyleSheet(self.config.ESTILOS_FUERZA[valoraciones[1]])
         self.label_fuerza_flop.show()
-        self.label_fuerza_turn.setStyleSheet(self.config.ESTILOS_FUERZA[fuerzas[2]])
+        self.label_fuerza_turn.setStyleSheet(self.config.ESTILOS_FUERZA[valoraciones[2]])
         self.label_fuerza_turn.show()
-        self.label_fuerza_river.setStyleSheet(self.config.ESTILOS_FUERZA[fuerzas[3]])
+        self.label_fuerza_river.setStyleSheet(self.config.ESTILOS_FUERZA[valoraciones[3]])
         self.label_fuerza_river.show()
 
 
@@ -322,46 +309,9 @@ class GUI(QtGui.QWidget):
         """
             Establece el texto del botón de los pasos según el valor del parámetro recibido 
         """
-        self.pushbutton_paso.setText(self.config.PASOS[paso])
+        self.pushbutton_paso.setText(self.crupier.pasos[paso])
 
 
-    def get_siguiente_paso(self):
-        """
-            Calcula, fija y devuelve el siguiente paso
-        """
-    
-        self.paso += 1
-
-        if self.paso == self.num_pasos:
-            self.paso = 0
-
-        return self.paso
-
-    def generar_carta(self):
-        """
-            Genera y devuelve una carta aleatoria de las que todavía no han sido repartidas 
-        """
-        
-        carta = False
-
-        while not carta:
-
-            # Genera la carta aleatoria
-            carta = randint(1, 52)
-
-            try:
-                # Comprueba que la carta no haya sido ya repartida
-                self.cartas_repartidas.index(carta)
-                
-                # La carta existe, busca otra
-                carta = False 
-
-            except:
-
-                # La carta no existe, la guarda en las cartas ya repartidas
-                self.cartas_repartidas.append(carta)
-
-        return carta 
 
     def inicializa_mesa(self):
         """
@@ -376,8 +326,7 @@ class GUI(QtGui.QWidget):
         # 
         # - Actualiza la lista de jugadas de la pantalla
         # - Actualiza la lista de las jugadas (list)
-        # - Guarda las fuerzas asignadas 
-        if len(self.cartas_mesa) == 5: 
+        if len(self.mesa.cartas) == 5: 
 
             #
             # Lista de judadas de pantalla
@@ -391,14 +340,14 @@ class GUI(QtGui.QWidget):
             #  Nº de jugada - Cartas del jugador - Cartas de la mesa
             #  1 - Ks 3h - Jc Ad 3s 7c Kh
             jugada = str(num_jugadas) + ' - '
-            jugada += self.config.CARTAS[self.cartas_jugador[0]]['nombre'] + ' '
-            jugada += self.config.CARTAS[self.cartas_jugador[1]]['nombre']
+            jugada += self.config.CARTAS[self.jugador.cartas[0]]['nombre'] + ' '
+            jugada += self.config.CARTAS[self.jugador.cartas[1]]['nombre']
             jugada += ' - '
-            jugada += self.config.CARTAS[self.cartas_mesa[0]]['nombre'] + ' '
-            jugada += self.config.CARTAS[self.cartas_mesa[1]]['nombre'] + ' '
-            jugada += self.config.CARTAS[self.cartas_mesa[2]]['nombre'] + ' '
-            jugada += self.config.CARTAS[self.cartas_mesa[3]]['nombre'] + ' '
-            jugada += self.config.CARTAS[self.cartas_mesa[4]]['nombre']
+            jugada += self.config.CARTAS[self.mesa.cartas[0]]['nombre'] + ' '
+            jugada += self.config.CARTAS[self.mesa.cartas[1]]['nombre'] + ' '
+            jugada += self.config.CARTAS[self.mesa.cartas[2]]['nombre'] + ' '
+            jugada += self.config.CARTAS[self.mesa.cartas[3]]['nombre'] + ' '
+            jugada += self.config.CARTAS[self.mesa.cartas[4]]['nombre']
 
             # Crea el item y lo añade a la lista
             item = QtGui.QStandardItem(jugada)
@@ -410,15 +359,7 @@ class GUI(QtGui.QWidget):
             #
             # Lista de jugadas (list)
             #
-            self.lista_jugadas.insert(num_jugadas, [self.cartas_jugador, self.cartas_mesa])
-
-            #
-            # Fuerzas
-            #
-
-            # Guarda las fuerzas de la anterior jugada
-            self.fuerzas_jugadas.insert(num_jugadas, self.fuerzas)
-            self.fuerzas = [0, 0, 0, 0]
+            self.lista_jugadas.insert(num_jugadas, [self.jugador, self.mesa])
 
         #
         # Prepara los widgets para una nueva ronda
@@ -436,10 +377,11 @@ class GUI(QtGui.QWidget):
         # Limpia la mesa
         # 
 
-        # Se recogen y barajan todas las cartas
-        self.cartas_mesa = list()
-        self.cartas_jugador = list()
-        self.cartas_repartidas = list()
+        # Se recogen las cartas de la mesa, es decir, se inicializan los objetos
+        # del jugador, mesa y crupier
+        self.jugador = Jugador()
+        self.mesa = Mesa()
+        self.crupier = Crupier(self.config)
     
         # Cartas de la mesa
         self.label_mesa_carta_1.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(0)))
