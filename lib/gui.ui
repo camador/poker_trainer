@@ -832,6 +832,12 @@
   <tabstop>pbtFuerza1</tabstop>
   <tabstop>pbtPaso</tabstop>
   <tabstop>lsvJugadas</tabstop>
+  <tabstop>rdbFlopOk</tabstop>
+  <tabstop>rdbFlopNoOk</tabstop>
+  <tabstop>rdbTurnOk</tabstop>
+  <tabstop>rdbTurnNoOk</tabstop>
+  <tabstop>rdbRiverOk</tabstop>
+  <tabstop>rdbRiverNoOk</tabstop>
   <tabstop>pbtSalir</tabstop>
  </tabstops>
  <resources/>
