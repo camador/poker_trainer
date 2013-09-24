@@ -10,13 +10,14 @@ Entrenador de póker.
 ##Créditos
 
 - Gráficos:
-  - Imágenes de las cartas por [Byron Knoll](http://byronknoll.blogspot.com.es/2011/03/vector-playing-cards.html)
-  - Imagen del reverso por [Chris Aguilar](http://code.google.com/p/vectorized-playing-cards/)
-  - Versión de las cartas en cuatro colores por [Edwar](https://soundcloud.com/edwar-rodriguez), basada en el diseño de [Byron Knoll](http://byronknoll.blogspot.com.es/2011/03/vector-playing-cards.html)
+  - Imágenes de las cartas por [Byron Knoll](http://byronknoll.blogspot.com.es/2011/03/vector-playing-cards.html).
+  - Imagen del reverso por [Chris Aguilar](http://code.google.com/p/vectorized-playing-cards/).
+  - Versión de las cartas en cuatro colores por [Edwar](https://soundcloud.com/edwar-rodriguez), basada en el diseño de [Byron Knoll](http://byronknoll.blogspot.com.es/2011/03/vector-playing-cards.html).
+  - Iconos [Windows 8 metro style](https://www.iconfinder.com/search/?q=iconset%3Awindows-8-metro-style) de [VisualPharm](http://icons8.com/).
 
 ##Agradecimientos
 
-- Idea, asesoramiento y pruebas: [Edwar](https://soundcloud.com/edwar-rodriguez)
+- Idea, asesoramiento y pruebas: [Edwar](https://soundcloud.com/edwar-rodriguez).
 
 ##Licencia
 
