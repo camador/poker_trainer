@@ -67,27 +67,35 @@ class GUI(QtGui.QWidget):
         self.pushbutton_paso = self.ui.findChild(QtGui.QPushButton, 'pbtPaso')
 
         # Botones para la fuerza de la jugada
-        self.pushbutton_fuerza5 = self.ui.findChild(QtGui.QPushButton, 'pbtFuerza5')
-        self.pushbutton_fuerza4 = self.ui.findChild(QtGui.QPushButton, 'pbtFuerza4')
-        self.pushbutton_fuerza3 = self.ui.findChild(QtGui.QPushButton, 'pbtFuerza3')
-        self.pushbutton_fuerza2 = self.ui.findChild(QtGui.QPushButton, 'pbtFuerza2')
-        self.pushbutton_fuerza1 = self.ui.findChild(QtGui.QPushButton, 'pbtFuerza1')
+        self.botones_fuerza = [
+                    self.ui.findChild(QtGui.QPushButton, 'pbtFuerza1'),
+                    self.ui.findChild(QtGui.QPushButton, 'pbtFuerza2'),
+                    self.ui.findChild(QtGui.QPushButton, 'pbtFuerza3'),
+                    self.ui.findChild(QtGui.QPushButton, 'pbtFuerza4'),
+                    self.ui.findChild(QtGui.QPushButton, 'pbtFuerza5')
+                ]
 
         # Cartas de la mesa
-        self.label_mesa_carta_1 = self.ui.findChild(QtGui.QLabel, 'lblMesaCarta1')
-        self.label_mesa_carta_2 = self.ui.findChild(QtGui.QLabel, 'lblMesaCarta2')
-        self.label_mesa_carta_3 = self.ui.findChild(QtGui.QLabel, 'lblMesaCarta3')
-        self.label_mesa_carta_4 = self.ui.findChild(QtGui.QLabel, 'lblMesaCarta4')
-        self.label_mesa_carta_5 = self.ui.findChild(QtGui.QLabel, 'lblMesaCarta5')
+        self.label_mesa_cartas = [
+                    self.ui.findChild(QtGui.QLabel, 'lblMesaCarta1'),
+                    self.ui.findChild(QtGui.QLabel, 'lblMesaCarta2'),
+                    self.ui.findChild(QtGui.QLabel, 'lblMesaCarta3'),
+                    self.ui.findChild(QtGui.QLabel, 'lblMesaCarta4'),
+                    self.ui.findChild(QtGui.QLabel, 'lblMesaCarta5')
+                ]
         
         # Cartas del jugador
-        self.label_jugador_carta_1 = self.ui.findChild(QtGui.QLabel, 'lblJugadorCarta1')
-        self.label_jugador_carta_2 = self.ui.findChild(QtGui.QLabel, 'lblJugadorCarta2')
+        self.label_jugador_cartas = [
+                    self.ui.findChild(QtGui.QLabel, 'lblJugadorCarta1'),
+                    self.ui.findChild(QtGui.QLabel, 'lblJugadorCarta2')
+                ]
 
         # Indicadores de la fuerza de las jugadas
-        self.label_fuerza_flop = self.ui.findChild(QtGui.QLabel, 'lblFuerzaFlop')
-        self.label_fuerza_turn = self.ui.findChild(QtGui.QLabel, 'lblFuerzaTurn')
-        self.label_fuerza_river = self.ui.findChild(QtGui.QLabel, 'lblFuerzaRiver')
+        self.label_fuerza = {
+                    'flop': self.ui.findChild(QtGui.QLabel, 'lblFuerzaFlop'),
+                    'turn': self.ui.findChild(QtGui.QLabel, 'lblFuerzaTurn'),
+                    'river': self.ui.findChild(QtGui.QLabel, 'lblFuerzaRiver')
+                }
 
         # Lista de jugadas
         self.dockwidget_jugadas = self.ui.findChild(QtGui.QDockWidget, 'dckJugadas')
@@ -107,11 +115,11 @@ class GUI(QtGui.QWidget):
 
         # Botones para la fuerza de la jugada
         # lambda porque la función tiene parámetros
-        self.pushbutton_fuerza5.clicked.connect(lambda: self.on_fuerza(5))
-        self.pushbutton_fuerza4.clicked.connect(lambda: self.on_fuerza(4))
-        self.pushbutton_fuerza3.clicked.connect(lambda: self.on_fuerza(3))
-        self.pushbutton_fuerza2.clicked.connect(lambda: self.on_fuerza(2))
-        self.pushbutton_fuerza1.clicked.connect(lambda: self.on_fuerza(1))
+        self.botones_fuerza[4].clicked.connect(lambda: self.on_fuerza(5))
+        self.botones_fuerza[3].clicked.connect(lambda: self.on_fuerza(4))
+        self.botones_fuerza[2].clicked.connect(lambda: self.on_fuerza(3))
+        self.botones_fuerza[1].clicked.connect(lambda: self.on_fuerza(2))
+        self.botones_fuerza[0].clicked.connect(lambda: self.on_fuerza(1))
 
         # Lista de jugadas
         self.listview_jugadas.clicked.connect(self.on_jugada_clicked)
@@ -203,11 +211,10 @@ class GUI(QtGui.QWidget):
         self.inicializa_mesa()
 
         # Cartas del jugador
-        self.jugador.cartas.insert(0, self.crupier.repartir_carta())
-        self.jugador.cartas.insert(1, self.crupier.repartir_carta())
-        
-        self.label_jugador_carta_1.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(self.jugador.cartas[0])))
-        self.label_jugador_carta_2.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(self.jugador.cartas[1])))
+        for i in range(0,2):
+            self.jugador.cartas.insert(i, self.crupier.repartir_carta())
+            imagen_carta = QtGui.QPixmap(self.config.get_imagen_carta(self.jugador.cartas[i]))
+            self.label_jugador_cartas[i].setPixmap(imagen_carta)
 
     def flop(self):
         """ 
@@ -217,15 +224,11 @@ class GUI(QtGui.QWidget):
         # Activa los botones para la fuerza
         self.activa_botones_fuerza(True)
 
-        # Genera las cartas
-        self.mesa.cartas.insert(0, self.crupier.repartir_carta())
-        self.mesa.cartas.insert(1, self.crupier.repartir_carta())
-        self.mesa.cartas.insert(2, self.crupier.repartir_carta())
-        
-        # Y las muestras
-        self.label_mesa_carta_1.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(self.mesa.cartas[0])))
-        self.label_mesa_carta_2.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(self.mesa.cartas[1])))
-        self.label_mesa_carta_3.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(self.mesa.cartas[2])))
+        # Reparte las cartas
+        for i in range(0, 3):
+            self.mesa.cartas.insert(i, self.crupier.repartir_carta())
+            imagen_carta = QtGui.QPixmap(self.config.get_imagen_carta(self.mesa.cartas[i]))
+            self.label_mesa_cartas[i].setPixmap(imagen_carta)
 
     def turn(self):
         """ 
@@ -236,7 +239,8 @@ class GUI(QtGui.QWidget):
         self.mesa.cartas.insert(3, self.crupier.repartir_carta())
         
         # Y la muestra
-        self.label_mesa_carta_4.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(self.mesa.cartas[3])))
+        imagen_carta = QtGui.QPixmap(self.config.get_imagen_carta(self.mesa.cartas[3]))
+        self.label_mesa_cartas[3].setPixmap(imagen_carta)
 
     def river(self):
         """ 
@@ -247,7 +251,8 @@ class GUI(QtGui.QWidget):
         self.mesa.cartas.insert(4, self.crupier.repartir_carta())
         
         # Y la muestra
-        self.label_mesa_carta_5.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(self.mesa.cartas[4])))
+        imagen_carta = QtGui.QPixmap(self.config.get_imagen_carta(self.mesa.cartas[4]))
+        self.label_mesa_cartas[4].setPixmap(imagen_carta)
     
 
     ##
@@ -282,24 +287,23 @@ class GUI(QtGui.QWidget):
 
         # Muestra las cartas del jugador y la mesa
         jugador = self.lista_jugadas[jugada][0]
-        self.label_jugador_carta_1.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(jugador.cartas[0])))
-        self.label_jugador_carta_2.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(jugador.cartas[1])))
+        for i in range(0, 2):
+            imagen_carta = QtGui.QPixmap(self.config.get_imagen_carta(jugador.cartas[i]))
+            self.label_jugador_cartas[i].setPixmap(imagen_carta)
 
         mesa = self.lista_jugadas[jugada][1]
-        self.label_mesa_carta_1.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(mesa.cartas[0])))
-        self.label_mesa_carta_2.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(mesa.cartas[1])))
-        self.label_mesa_carta_3.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(mesa.cartas[2])))
-        self.label_mesa_carta_4.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(mesa.cartas[3])))
-        self.label_mesa_carta_5.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(mesa.cartas[4])))
+        for i in range(0, 5):
+            imagen_carta = QtGui.QPixmap(self.config.get_imagen_carta(mesa.cartas[i]))
+            self.label_mesa_cartas[i].setPixmap(imagen_carta)
 
         # Muestra la valoración de fuerza
         valoracion = jugador.valoracion
-        self.label_fuerza_flop.setStyleSheet(self.config.ESTILOS_FUERZA[valoracion[1]])
-        self.label_fuerza_flop.show()
-        self.label_fuerza_turn.setStyleSheet(self.config.ESTILOS_FUERZA[valoracion[2]])
-        self.label_fuerza_turn.show()
-        self.label_fuerza_river.setStyleSheet(self.config.ESTILOS_FUERZA[valoracion[3]])
-        self.label_fuerza_river.show()
+        self.label_fuerza['flop'].setStyleSheet(self.config.ESTILOS_FUERZA[valoracion[1]])
+        self.label_fuerza['turn'].setStyleSheet(self.config.ESTILOS_FUERZA[valoracion[2]])
+        self.label_fuerza['river'].setStyleSheet(self.config.ESTILOS_FUERZA[valoracion[3]])
+
+        for label in self.label_fuerza.itervalues():
+            label.show()
 
 
     ##
@@ -369,9 +373,8 @@ class GUI(QtGui.QWidget):
         self.activa_botones_fuerza(False)
 
         # Oculta los indicadores de fuerza
-        self.label_fuerza_flop.hide()
-        self.label_fuerza_turn.hide()
-        self.label_fuerza_river.hide()
+        for label in self.label_fuerza.itervalues():
+            label.hide()
         
         #
         # Limpia la mesa
@@ -384,22 +387,17 @@ class GUI(QtGui.QWidget):
         self.crupier = Crupier(self.config)
     
         # Cartas de la mesa
-        self.label_mesa_carta_1.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(0)))
-        self.label_mesa_carta_2.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(0)))
-        self.label_mesa_carta_3.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(0)))
-        self.label_mesa_carta_4.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(0)))
-        self.label_mesa_carta_5.setPixmap(QtGui.QPixmap(self.config.get_imagen_carta(0)))
+        reverso = QtGui.QPixmap(self.config.get_imagen_carta(0))
+        for carta in self.label_mesa_cartas:
+            carta.setPixmap(reverso)
 
     def activa_botones_fuerza(self, activar = True):
         """
             Activa o desactiva los botones de la fuerza
         """
 
-        self.pushbutton_fuerza5.setEnabled(activar)
-        self.pushbutton_fuerza4.setEnabled(activar)
-        self.pushbutton_fuerza3.setEnabled(activar)
-        self.pushbutton_fuerza2.setEnabled(activar)
-        self.pushbutton_fuerza1.setEnabled(activar)
+        for boton in self.botones_fuerza:
+            boton.setEnabled(activar)
     
 
 if __name__ == '__main__':
