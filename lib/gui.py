@@ -102,6 +102,7 @@ class GUI(QtGui.QWidget):
         self.listview_jugadas = self.ui.findChild(QtGui.QListView, 'lsvJugadas')
         self.model_jugadas = QtGui.QStandardItemModel(self.listview_jugadas)
         self.listview_jugadas.setModel(self.model_jugadas)
+        self.selec_model = self.listview_jugadas.selectionModel()
 
         #
         # Conecta las señales
@@ -123,6 +124,7 @@ class GUI(QtGui.QWidget):
 
         # Lista de jugadas
         self.listview_jugadas.clicked.connect(self.on_jugada_clicked)
+        self.selec_model.currentRowChanged.connect(self.on_jugada_clicked)
 
 
     ##
