@@ -30,5 +30,10 @@ class Jugador:
         # 5 - Mano Muy Fuerte (MMF)
         self.valoracion = [0, 0, 0, 0]
 
+        # Revisión de la valoración de la jugada por cada paso (Flop, Turn y River)
+        # 0 -> Incorrecto
+        # 1 -> Correcto
+        self.revision = list()
+
 if __name__ == '__main__':
     print u'Módulo no ejecutable.'

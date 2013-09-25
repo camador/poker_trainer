@@ -106,6 +106,21 @@ class GUI(QtGui.QWidget):
 
         # Controles de revisión
         self.groupbox_revision = self.ui.findChild(QtGui.QGroupBox, 'grbRevision')
+        self.radiobutton_revision = {
+                    'flop': [
+                            self.ui.findChild(QtGui.QRadioButton, 'rdbFlopOk'),
+                            self.ui.findChild(QtGui.QRadioButton, 'rdbFlopNoOk')
+                        ],
+                    'turn': [
+                            self.ui.findChild(QtGui.QRadioButton, 'rdbTurnOk'),
+                            self.ui.findChild(QtGui.QRadioButton, 'rdbTurnNoOk')
+                        ],
+                    'river': [
+                            self.ui.findChild(QtGui.QRadioButton, 'rdbRiverOk'),
+                            self.ui.findChild(QtGui.QRadioButton, 'rdbRiverNoOk')
+                        ]
+                }
+        self.pushbutton_revision = self.ui.findChild(QtGui.QPushButton, 'pbtRevision')
 
         #
         # Conecta las señales
@@ -127,6 +142,9 @@ class GUI(QtGui.QWidget):
 
         # Lista de jugadas
         self.selec_model.currentRowChanged.connect(self.on_jugada_row_changed)
+
+        # Revisión
+        self.pushbutton_revision.clicked.connect(self.on_revision)
 
 
     ##
@@ -322,8 +340,82 @@ class GUI(QtGui.QWidget):
         for label in self.label_fuerza.itervalues():
             label.show()
 
-        # Activa los controles de revisión
+        # Activa los controles de revisión y fija los valores, si los hay
         self.activa_revision(True)
+
+        pasos = ['flop', 'turn', 'river']
+        for i in range(3):
+
+            paso = pasos[i]
+
+            try:
+
+                # Recupera el valor de la revisón
+                revision = jugador.revision[i]
+
+                if revision == 1:
+
+                    # Correcto. Marca el radiobutton Ok
+                    self.radiobutton_revision[paso][0].setChecked(True)
+
+                elif revision == 0:
+
+                    # Correcto. Marca el radiobutton NoOk
+                    self.radiobutton_revision[paso][1].setChecked(True)
+
+            except:
+                # Si no existe la revisión desmarca los dos radiobuttons
+                self.radiobutton_revision[paso][0].setAutoExclusive(False)
+                self.radiobutton_revision[paso][0].setChecked(False)
+                self.radiobutton_revision[paso][1].setChecked(False)
+                self.radiobutton_revision[paso][0].setAutoExclusive(True)
+
+    ##
+    ## REVISION
+    ##
+    @QtCore.pyqtSlot()
+    def on_revision(self):
+        """
+            Guarda los valores de revisión de la jugada
+        """
+
+        # Recupera la jugada
+        jugada = self.selec_model.currentIndex().row()
+        jugador = self.lista_jugadas[jugada][0]
+        
+        # Por cada paso comprueba la revisión:
+        # {
+        #   paso1 = [radiook, radionook],
+        #   ...
+        #   pason = [radiook, radionook]
+        # }
+        pasos = ['flop', 'turn', 'river']
+        for i in range(3):
+
+            paso = pasos[i]
+
+            # Tres estados posibles:
+            # - Correcto -> Primer radiobutton de la lista marcado (Ej.: rdbFlopOk)
+            # - Incorrecto -> Segundo radiobutton de la lista marcado (Ej.: rdbFlopNoOk)
+            # - Sin revisar -> Ningún radiobutton marcado
+            #
+            # Para cada paso el valor de la revisión puede ser:
+            # 0 -> Incorrecto
+            # 1 -> Correcto
+            if self.radiobutton_revision[paso][0].isChecked():
+
+                # Correcto
+                jugador.revision.insert(i, 1)
+
+            elif self.radiobutton_revision[paso][1].isChecked():
+
+                # Incorrecto
+                jugador.revision.insert(i, 0)
+
+            else:
+
+                # Sin revisar
+                pass
 
     ##
     ## MÉTODOS AUXILIARES
@@ -427,7 +519,6 @@ class GUI(QtGui.QWidget):
         """
 
         self.groupbox_revision.setEnabled(activar)
-        print activar
 
 if __name__ == '__main__':
     print u'Módulo no ejecutable.'
