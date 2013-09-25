@@ -104,6 +104,9 @@ class GUI(QtGui.QWidget):
         self.listview_jugadas.setModel(self.model_jugadas)
         self.selec_model = self.listview_jugadas.selectionModel()
 
+        # Controles de revisión
+        self.groupbox_revision = self.ui.findChild(QtGui.QGroupBox, 'grbRevision')
+
         #
         # Conecta las señales
         #
@@ -123,8 +126,7 @@ class GUI(QtGui.QWidget):
         self.botones_fuerza[0].clicked.connect(lambda: self.on_fuerza(1))
 
         # Lista de jugadas
-        self.listview_jugadas.clicked.connect(self.on_jugada_clicked)
-        self.selec_model.currentRowChanged.connect(self.on_jugada_clicked)
+        self.selec_model.currentRowChanged.connect(self.on_jugada_row_changed)
 
 
     ##
@@ -213,7 +215,7 @@ class GUI(QtGui.QWidget):
         self.inicializa_mesa()
 
         # Cartas del jugador
-        for i in range(0,2):
+        for i in range(2):
             self.jugador.cartas.insert(i, self.crupier.repartir_carta())
             imagen_carta = QtGui.QPixmap(self.config.get_imagen_carta(self.jugador.cartas[i]))
             self.label_jugador_cartas[i].setPixmap(imagen_carta)
@@ -227,7 +229,7 @@ class GUI(QtGui.QWidget):
         self.activa_botones_fuerza(True)
 
         # Reparte las cartas
-        for i in range(0, 3):
+        for i in range(3):
             self.mesa.cartas.insert(i, self.crupier.repartir_carta())
             imagen_carta = QtGui.QPixmap(self.config.get_imagen_carta(self.mesa.cartas[i]))
             self.label_mesa_cartas[i].setPixmap(imagen_carta)
@@ -286,7 +288,7 @@ class GUI(QtGui.QWidget):
     ## LISTA
     ##
     @QtCore.pyqtSlot(QtGui.QStandardItemModel)
-    def on_jugada_clicked(self, model_index):
+    def on_jugada_row_changed(self, model_index):
         """
             Muestra en la mesa la jugada seleccionada con su valoración de fuerza
             correspondiente
@@ -302,12 +304,12 @@ class GUI(QtGui.QWidget):
 
         # Muestra las cartas del jugador y la mesa
         jugador = self.lista_jugadas[jugada][0]
-        for i in range(0, 2):
+        for i in range(2):
             imagen_carta = QtGui.QPixmap(self.config.get_imagen_carta(jugador.cartas[i]))
             self.label_jugador_cartas[i].setPixmap(imagen_carta)
 
         mesa = self.lista_jugadas[jugada][1]
-        for i in range(0, 5):
+        for i in range(5):
             imagen_carta = QtGui.QPixmap(self.config.get_imagen_carta(mesa.cartas[i]))
             self.label_mesa_cartas[i].setPixmap(imagen_carta)
 
@@ -320,6 +322,8 @@ class GUI(QtGui.QWidget):
         for label in self.label_fuerza.itervalues():
             label.show()
 
+        # Activa los controles de revisión
+        self.activa_revision(True)
 
     ##
     ## MÉTODOS AUXILIARES
@@ -384,6 +388,9 @@ class GUI(QtGui.QWidget):
         # Prepara los widgets para una nueva ronda
         #
 
+        # Desactiva los controles de revisión
+        self.activa_revision(False)
+
         # Desactiva los botones de la fuerza porque hasta el flop no pueden pulsarse
         self.activa_botones_fuerza(False)
 
@@ -414,6 +421,13 @@ class GUI(QtGui.QWidget):
         for boton in self.botones_fuerza:
             boton.setEnabled(activar)
     
+    def activa_revision(self, activar = True):
+        """
+            Activa o desactiva los controles de revisión
+        """
+
+        self.groupbox_revision.setEnabled(activar)
+        print activar
 
 if __name__ == '__main__':
     print u'Módulo no ejecutable.'
