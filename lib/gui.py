@@ -376,7 +376,7 @@ class GUI(QtGui.QWidget):
     @QtCore.pyqtSlot()
     def on_revision(self):
         """
-            Guarda los valores de revisión de la jugada
+            Guarda los valores de revisión de la jugada y pasa a la siguiente, si existe
         """
 
         # Recupera la jugada
@@ -416,6 +416,10 @@ class GUI(QtGui.QWidget):
 
                 # Sin revisar
                 pass
+
+        # Siguiente jugada de la lista
+        index = self.listview_jugadas.moveCursor(QtGui.QAbstractItemView.MoveNext, QtCore.Qt.NoModifier)
+        self.selec_model.select(index, QtGui.QItemSelectionModel.SelectCurrent)
 
     ##
     ## MÉTODOS AUXILIARES
