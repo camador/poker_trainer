@@ -268,6 +268,19 @@ class GUI(QtGui.QWidget):
         # Fuerza asignada al paso anterior
         self.jugador.valoracion[self.crupier.paso] = fuerza
 
+        # Fija el color del indicador correspondiente en función de la fuerza seleccionada y
+        # lo muestra
+        if self.crupier.paso == 1:
+            nombre = 'flop'
+        
+        elif self.crupier.paso == 2:
+            nombre = 'turn'
+        
+        else:
+            nombre = 'river'
+            
+        self.label_fuerza[nombre].setStyleSheet(self.config.ESTILOS_FUERZA[fuerza])
+        self.label_fuerza[nombre].show()
 
     ##
     ## LISTA
