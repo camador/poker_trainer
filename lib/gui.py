@@ -348,27 +348,18 @@ class GUI(QtGui.QWidget):
 
             paso = pasos[i]
 
-            try:
+            # Recupera el valor de la revisón
+            revision = jugador.revision[i]
 
-                # Recupera el valor de la revisón
-                revision = jugador.revision[i]
+            if revision == 1:
 
-                if revision == 1:
+                # Correcto. Marca el radiobutton Ok
+                self.radiobutton_revision[paso][0].setChecked(True)
 
-                    # Correcto. Marca el radiobutton Ok
-                    self.radiobutton_revision[paso][0].setChecked(True)
+            elif revision == 0:
 
-                elif revision == 0:
-
-                    # Correcto. Marca el radiobutton NoOk
-                    self.radiobutton_revision[paso][1].setChecked(True)
-
-            except:
-                # Si no existe la revisión desmarca los dos radiobuttons
-                self.radiobutton_revision[paso][0].setAutoExclusive(False)
-                self.radiobutton_revision[paso][0].setChecked(False)
-                self.radiobutton_revision[paso][1].setChecked(False)
-                self.radiobutton_revision[paso][0].setAutoExclusive(True)
+                # Correcto. Marca el radiobutton NoOk
+                self.radiobutton_revision[paso][1].setChecked(True)
 
     ##
     ## REVISION
@@ -405,12 +396,12 @@ class GUI(QtGui.QWidget):
             if self.radiobutton_revision[paso][0].isChecked():
 
                 # Correcto
-                jugador.revision.insert(i, 1)
+                jugador.revision[i] = 1
 
             elif self.radiobutton_revision[paso][1].isChecked():
 
                 # Incorrecto
-                jugador.revision.insert(i, 0)
+                jugador.revision[i] = 0
 
             else:
 
@@ -522,6 +513,15 @@ class GUI(QtGui.QWidget):
             Activa o desactiva los controles de revisión
         """
 
+        # Limpia las selecciones de los radiobuttons
+        for paso in self.radiobutton_revision:
+
+            self.radiobutton_revision[paso][0].setAutoExclusive(False)
+            self.radiobutton_revision[paso][0].setChecked(False)
+            self.radiobutton_revision[paso][1].setChecked(False)
+            self.radiobutton_revision[paso][0].setAutoExclusive(True)
+
+        # Los activa o desactiva
         self.groupbox_revision.setEnabled(activar)
 
 if __name__ == '__main__':

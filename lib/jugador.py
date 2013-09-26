@@ -33,7 +33,7 @@ class Jugador:
         # Revisión de la valoración de la jugada por cada paso (Flop, Turn y River)
         # 0 -> Incorrecto
         # 1 -> Correcto
-        self.revision = list()
+        self.revision = [None, None, None]
 
 if __name__ == '__main__':
     print u'Módulo no ejecutable.'
