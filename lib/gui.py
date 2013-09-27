@@ -97,12 +97,19 @@ class GUI(QtGui.QWidget):
                     'river': self.ui.findChild(QtGui.QLabel, 'lblFuerzaRiver')
                 }
 
-        # Lista de jugadas
+        # Dock para la lista de jugadas
         self.dockwidget_jugadas = self.ui.findChild(QtGui.QDockWidget, 'dckJugadas')
+
+        # Lista de jugadas
         self.listview_jugadas = self.ui.findChild(QtGui.QListView, 'lsvJugadas')
+
+        # Model de la lista de jugadas
         self.model_jugadas = QtGui.QStandardItemModel(self.listview_jugadas)
         self.listview_jugadas.setModel(self.model_jugadas)
-        self.selec_model = self.listview_jugadas.selectionModel()
+
+        # Selection Model de la lista de jugadas
+        self.selec_model_jugadas = self.listview_jugadas.selectionModel()
+
 
         # Controles de revisión
         self.groupbox_revision = self.ui.findChild(QtGui.QGroupBox, 'grbRevision')
@@ -141,7 +148,7 @@ class GUI(QtGui.QWidget):
         self.botones_fuerza[0].clicked.connect(lambda: self.on_fuerza(1))
 
         # Lista de jugadas
-        self.selec_model.currentRowChanged.connect(self.on_jugada_row_changed)
+        self.selec_model_jugadas.currentRowChanged.connect(self.on_jugada_row_changed)
 
         # Revisión
         self.pushbutton_revision.clicked.connect(self.on_revision)
@@ -371,7 +378,7 @@ class GUI(QtGui.QWidget):
         """
 
         # Recupera la jugada
-        jugada = self.selec_model.currentIndex().row()
+        jugada = self.selec_model_jugadas.currentIndex().row()
         jugador = self.lista_jugadas[jugada][0]
         
         # Por cada paso comprueba la revisión:
@@ -410,7 +417,8 @@ class GUI(QtGui.QWidget):
 
         # Siguiente jugada de la lista
         index = self.listview_jugadas.moveCursor(QtGui.QAbstractItemView.MoveNext, QtCore.Qt.NoModifier)
-        self.selec_model.select(index, QtGui.QItemSelectionModel.SelectCurrent)
+        self.listview_jugadas.setCurrentIndex(index)
+        self.selec_model_jugadas.select(index, QtGui.QItemSelectionModel.SelectCurrent)
 
     ##
     ## MÉTODOS AUXILIARES
