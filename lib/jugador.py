@@ -35,5 +35,24 @@ class Jugador:
         # 1 -> Correcto
         self.revision = [None, None, None]
 
+        # Marcador para indicar si la jugada ha sido revisada
+        self.revisada = False
+
+    def revision_pleno(self):
+        """
+            Devuelve True si el jugador ha acertado en todas las valoraciones
+        """
+
+        # Valor a devolver
+        pleno = True
+
+        # Recorre la lista de revisiones y cambia el valor de 'pleno' cuando encuentra
+        # un error o un paso sin valorar
+        for paso in range(3):
+            if self.revision[paso] != 1:
+                pleno = False
+    
+        return pleno
+
 if __name__ == '__main__':
     print u'Módulo no ejecutable.'

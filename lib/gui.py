@@ -15,6 +15,7 @@ from lib.config import Config
 from lib.jugador import Jugador
 from lib.mesa import Mesa
 from lib.crupier import Crupier
+from lib.estadistica import Estadistica
 
 # Otros
 import sys
@@ -36,6 +37,9 @@ class GUI(QtGui.QWidget):
         self.jugador = Jugador()
         self.mesa = Mesa()
         self.crupier = Crupier(self.config)
+
+        # Estadísticas
+        self.estadistica = Estadistica()
 
         # Lista de jugadas
         self.lista_jugadas = list()
@@ -96,6 +100,17 @@ class GUI(QtGui.QWidget):
                     'turn': self.ui.findChild(QtGui.QLabel, 'lblFuerzaTurn'),
                     'river': self.ui.findChild(QtGui.QLabel, 'lblFuerzaRiver')
                 }
+
+        # Porcentaje de aciertos
+        self.label_porcentaje = {
+                    'flop': self.ui.findChild(QtGui.QLabel, 'lblPorcentajeFlop'),
+                    'turn': self.ui.findChild(QtGui.QLabel, 'lblPorcentajeTurn'),
+                    'river': self.ui.findChild(QtGui.QLabel, 'lblPorcentajeRiver'),
+                    'total': self.ui.findChild(QtGui.QLabel, 'lblPorcentajeTotal')
+                }
+
+        # Número de jugadas revisadas
+        self.label_numero_revisiones = self.ui.findChild(QtGui.QLabel, 'lblNumeroRevisiones')
 
         # Dock para la lista de jugadas
         self.dockwidget_jugadas = self.ui.findChild(QtGui.QDockWidget, 'dckJugadas')
@@ -380,6 +395,15 @@ class GUI(QtGui.QWidget):
         # Recupera la jugada
         jugada = self.selec_model_jugadas.currentIndex().row()
         jugador = self.lista_jugadas[jugada][0]
+
+        # Marcador de jugada ya revisada
+        revisada = jugador.revisada
+
+        # Indicador de acierto en los tres pasos
+        revision_pleno = jugador.revision_pleno()
+
+        # Número de pasos no revisados (radiobuttons no seleccionados)
+        pasos_no_revisados = 0
         
         # Por cada paso comprueba la revisión:
         # {
@@ -402,10 +426,20 @@ class GUI(QtGui.QWidget):
             # 1 -> Correcto
             if self.radiobutton_revision[paso][0].isChecked():
 
+                # Actualización de las estadísticas
+                # Aumenta el contador cuando cambia la revisión
+                if jugador.revision[i] != 1:
+                    self.estadistica.actualiza_paso(paso, 1)
+
                 # Correcto
                 jugador.revision[i] = 1
 
             elif self.radiobutton_revision[paso][1].isChecked():
+
+                # Actualización de las estadísticas
+                # Decrementa el contador cuando la revisión anterior era correcta
+                if jugador.revision[i] == 1:
+                    self.estadistica.actualiza_paso(paso, -1)
 
                 # Incorrecto
                 jugador.revision[i] = 0
@@ -413,7 +447,40 @@ class GUI(QtGui.QWidget):
             else:
 
                 # Sin revisar
-                pass
+                pasos_no_revisados += 1
+
+        # Contador de cierto en los tres pasos
+        # Si en la nueva revisión todo son aciertos y en la anterior no, incrementa
+        # el contador
+        nuevo_revision_pleno = jugador.revision_pleno()
+        if nuevo_revision_pleno and revision_pleno != nuevo_revision_pleno:
+            self.estadistica.actualiza_paso('total', 1)
+
+        # Contador de jugadas revisadas
+        # Si la jugada no había sido anteriormente revisada, y en la actual revisión se ha marcado
+        # algún radiobutton, incrementa el contador de jugadas revisadas y la marca como revisada
+        if not revisada and pasos_no_revisados < 3:
+            self.estadistica.revisadas += 1
+            jugador.revisada = True
+
+        # Actualiza las estadísticas si hay alguna jugada revisada
+        if self.estadistica.revisadas > 0:
+
+            # Número de revisiones
+            self.label_numero_revisiones.setText('(sobre {0} revisiones)'.format(self.estadistica.revisadas))
+            for paso in ['flop', 'turn', 'river', 'total']:
+
+                # Cálculo del porcentaje
+                porcentaje = self.estadistica.porcentaje_paso(paso)
+                
+                # Formato según el valor
+                if porcentaje == 100:
+                    texto_label = '{0:.0f}'.format(porcentaje)
+                else:
+                    texto_label = '{0:.2f}'.format(porcentaje)
+
+                # Muestra el porcentaje
+                self.label_porcentaje[paso].setText(texto_label)
 
         # Siguiente jugada de la lista
         index = self.listview_jugadas.moveCursor(QtGui.QAbstractItemView.MoveNext, QtCore.Qt.NoModifier)
