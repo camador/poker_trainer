@@ -1,6 +1,8 @@
 #POKER TRAINER
 
-Entrenador de póker.
+Entrenador de Texas Hold'em para un jugador.
+
+Genera manos y permite al jugador hacer una valoración de fuerza de la jugada en el Flop, Turn y River. Posteriormente las jugadas pueden ser revisadas y obtener estadísticas de acierto.
 
 ##Requisitos
 
