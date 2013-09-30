@@ -112,8 +112,8 @@ class GUI(QtGui.QWidget):
         # Número de jugadas revisadas
         self.label_numero_revisiones = self.ui.findChild(QtGui.QLabel, 'lblNumeroRevisiones')
 
-        # Dock para la lista de jugadas
-        self.dockwidget_jugadas = self.ui.findChild(QtGui.QDockWidget, 'dckJugadas')
+        # Groupbox para la lista de jugadas
+        self.groupbox_jugadas = self.ui.findChild(QtGui.QGroupBox, 'grbJugadas')
 
         # Lista de jugadas
         self.listview_jugadas = self.ui.findChild(QtGui.QListView, 'lsvJugadas')
@@ -539,7 +539,7 @@ class GUI(QtGui.QWidget):
             self.model_jugadas.appendRow(item)
 
             # Actualiza el título de la lista con el contador de jugadas
-            self.dockwidget_jugadas.setWindowTitle('Jugadas ({0})'.format(num_jugadas))
+            self.groupbox_jugadas.setTitle('Jugadas ({0})'.format(num_jugadas))
 
             #
             # Lista de jugadas (list)
