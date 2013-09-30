@@ -440,6 +440,12 @@ class GUI(QtGui.QWidget):
             Limpia la lista de jugadas y las estadísticas
         """
 
+        # Limpia la lista
+        self.model_jugadas.removeRows(0, self.model_jugadas.rowCount())
+        
+        # Actualiza el título de la lista con el contador de jugadas
+        self.groupbox_jugadas.setTitle('Jugadas')
+
         # Informa al usuario
         self.statusbar_barra_de_estado.showMessage(u'Jugadas y estadísticas eliminadas', 3000)
 
