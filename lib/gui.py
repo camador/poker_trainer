@@ -17,6 +17,9 @@ from lib.mesa import Mesa
 from lib.crupier import Crupier
 from lib.estadistica import Estadistica
 
+# Acerca de
+from lib.acercade import Acercade
+
 # Otros
 import sys
 import os
@@ -151,6 +154,9 @@ class GUI(QtGui.QWidget):
                 }
         self.pushbutton_revision = self.ui.findChild(QtGui.QPushButton, 'pbtRevision')
 
+        # Menú
+        self.action_acerca_de = self.ui.findChild(QtGui.QAction, 'actionAcerca_de')
+
     def conecta_senales(self):
         """
             Conecta las señales de los widges
@@ -176,12 +182,15 @@ class GUI(QtGui.QWidget):
         # Revisión
         self.pushbutton_revision.clicked.connect(self.on_revision)
 
+        # Menú
+        self.action_acerca_de.triggered.connect(self.on_acerca_de)
+
     ##
     ## MAIN
     ##
     def main(self):
         """
-            Método de inicio)
+            Método de inicio
         """
         
         #
@@ -211,6 +220,19 @@ class GUI(QtGui.QWidget):
 
         # Saliendo
         sys.exit()
+
+    ##
+    ## ACERCA DE
+    ##
+    @QtCore.pyqtSlot()
+    def on_acerca_de(self):
+        """
+            Termina la ejecución del programa
+        """
+
+        # Muestra la ventana 'Acerca de'
+        acercade = Acercade()
+        acercade.main()
 
     ##
     ## SALIR
