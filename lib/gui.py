@@ -157,6 +157,9 @@ class GUI(QtGui.QWidget):
         # Menú
         self.action_acerca_de = self.ui.findChild(QtGui.QAction, 'actionAcerca_de')
 
+        # Barra de estado
+        self.statusbar_barra_de_estado = self.ui.findChild(QtGui.QStatusBar, 'statusBar')
+
     def conecta_senales(self):
         """
             Conecta las señales de los widges
@@ -202,6 +205,9 @@ class GUI(QtGui.QWidget):
 
         # Primer paso: preflop
         self.preflop()
+
+        # Barra de estado
+        self.statusbar_barra_de_estado.showMessage('Bienvenido a Poker Trainer', 3000)
 
 
         # Muestra la ventana principal
