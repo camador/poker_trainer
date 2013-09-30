@@ -60,9 +60,16 @@ class GUI(QtGui.QWidget):
         # Lee el fichero que contiene la interfaz gráfica
         self.ui = uic.loadUi(os.path.join('lib', 'gui.ui'))
 
-        #
-        # Lee los widgets y los asigna a variables
-        #
+        # Lee los widgets
+        self.lee_widgets()
+
+        # Conecta las señales
+        self.conecta_senales()
+
+    def lee_widgets(self):
+        """
+            Lee los widgets y los asigna a variables
+        """
 
         # Botón Salir
         #self.pushbutton_salir = self.ui.findChild(QtGui.QPushButton, 'pbtSalir')
@@ -144,9 +151,10 @@ class GUI(QtGui.QWidget):
                 }
         self.pushbutton_revision = self.ui.findChild(QtGui.QPushButton, 'pbtRevision')
 
-        #
-        # Conecta las señales
-        #
+    def conecta_senales(self):
+        """
+            Conecta las señales de los widges
+        """
 
         # Botón Salir
         #self.pushbutton_salir.clicked.connect(self.on_salir)
@@ -167,7 +175,6 @@ class GUI(QtGui.QWidget):
 
         # Revisión
         self.pushbutton_revision.clicked.connect(self.on_revision)
-
 
     ##
     ## MAIN
