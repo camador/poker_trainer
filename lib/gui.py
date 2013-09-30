@@ -135,6 +135,10 @@ class GUI(QtGui.QWidget):
         # Selection Model de la lista de jugadas
         self.selec_model_jugadas = self.listview_jugadas.selectionModel()
 
+        # Botones de la lista de jugadas
+        self.pushbutton_guardar = self.ui.findChild(QtGui.QPushButton, 'pbtGuardar')
+        self.pushbutton_limpiar = self.ui.findChild(QtGui.QPushButton, 'pbtLimpiar')
+
 
         # Controles de revisión
         self.groupbox_revision = self.ui.findChild(QtGui.QGroupBox, 'grbRevision')
@@ -156,6 +160,7 @@ class GUI(QtGui.QWidget):
 
         # Menú
         self.action_acerca_de = self.ui.findChild(QtGui.QAction, 'actionAcerca_de')
+        self.menu_jugadas = self.ui.findChild(QtGui.QMenu, 'menuJugadas')
 
         # Barra de estado
         self.statusbar_barra_de_estado = self.ui.findChild(QtGui.QStatusBar, 'statusBar')
@@ -181,6 +186,8 @@ class GUI(QtGui.QWidget):
 
         # Lista de jugadas
         self.selec_model_jugadas.currentRowChanged.connect(self.on_jugada_row_changed)
+        self.pushbutton_guardar.clicked.connect(self.on_guardar)
+        self.pushbutton_limpiar.clicked.connect(self.on_limpiar)
 
         # Revisión
         self.pushbutton_revision.clicked.connect(self.on_revision)
@@ -418,6 +425,28 @@ class GUI(QtGui.QWidget):
                 # Correcto. Marca el radiobutton NoOk
                 self.radiobutton_revision[paso][1].setChecked(True)
 
+    @QtCore.pyqtSlot()
+    def on_guardar(self):
+        """
+            Guarda la lista de las jugadas y las estadísticas en un fichero
+        """
+
+        # Informa al usuario
+        self.statusbar_barra_de_estado.showMessage('Guardando jugadas...', 3000)
+
+    @QtCore.pyqtSlot()
+    def on_limpiar(self):
+        """
+            Limpia la lista de jugadas y las estadísticas
+        """
+
+        # Informa al usuario
+        self.statusbar_barra_de_estado.showMessage(u'Jugadas y estadísticas eliminadas', 3000)
+
+        # Desactiva los botones y menú de la lista de jugadas
+        self.activa_botones_jugada(False)
+        
+
     ##
     ## REVISION
     ##
@@ -581,6 +610,9 @@ class GUI(QtGui.QWidget):
             #
             self.lista_jugadas.append([self.jugador, self.mesa])
 
+            # Activa los botones y el menú de la lista de jugadas
+            self.activa_botones_jugada(True)
+
         #
         # Prepara los widgets para una nueva ronda
         #
@@ -633,6 +665,18 @@ class GUI(QtGui.QWidget):
 
         # Los activa o desactiva
         self.groupbox_revision.setEnabled(activar)
+
+    def activa_botones_jugada(self, activar = True):
+        """
+            Activa o desactiva los botones y menú de la lista de jugadas 
+        """
+        
+        # Botones
+        self.pushbutton_guardar.setEnabled(activar)
+        self.pushbutton_limpiar.setEnabled(activar)
+
+        # Menú
+        self.menu_jugadas.setEnabled(activar)
 
 if __name__ == '__main__':
     print u'Módulo no ejecutable.'
