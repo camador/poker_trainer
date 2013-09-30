@@ -1138,6 +1138,9 @@
    <property name="text">
     <string>Salir</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
   </action>
  </widget>
  <tabstops>
@@ -1160,7 +1163,7 @@
  <connections>
   <connection>
    <sender>actionSalir</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>close()</slot>
    <hints>
