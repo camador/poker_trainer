@@ -22,9 +22,6 @@ class Acercade(QtGui.QWidget):
 
     def __init__(self):
 
-        # Antes de nada crea el objeto 'aplicación' de Qt
-        self.app = QtGui.QApplication(sys.argv)
-
         # Inicicializa el ancestro
         QtGui.QWidget.__init__(self)
 
