@@ -65,7 +65,7 @@ class GUI(QtGui.QWidget):
         #
 
         # Botón Salir
-        self.pushbutton_salir = self.ui.findChild(QtGui.QPushButton, 'pbtSalir')
+        #self.pushbutton_salir = self.ui.findChild(QtGui.QPushButton, 'pbtSalir')
 
         # Botón Paso
         self.pushbutton_paso = self.ui.findChild(QtGui.QPushButton, 'pbtPaso')
@@ -149,7 +149,7 @@ class GUI(QtGui.QWidget):
         #
 
         # Botón Salir
-        self.pushbutton_salir.clicked.connect(self.on_salir)
+        #self.pushbutton_salir.clicked.connect(self.on_salir)
 
         # Botón Paso
         self.pushbutton_paso.clicked.connect(self.on_paso)
