@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>584</width>
+    <height>385</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>584</width>
+    <height>385</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>584</width>
+    <height>385</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Acerca de...</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../imagenes/cards.png</normaloff>../imagenes/cards.png</iconset>
+  </property>
+  <widget class="QDialogButtonBox" name="buttonBox">
+   <property name="geometry">
+    <rect>
+     <x>200</x>
+     <y>345</y>
+     <width>375</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+   <property name="standardButtons">
+    <set>QDialogButtonBox::Ok</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>15</x>
+     <y>15</y>
+     <width>166</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>16</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Poker Trainer</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>15</x>
+     <y>50</y>
+     <width>341</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>César Amador - &lt;a href=&quot;mailto:camador.git@gmail.com&quot;&gt;camador.git@gmail.com&lt;/a&gt; - &lt;a href=&quot;https://github.com/camador/poker_trainer&quot;&gt;Github&lt;/a&gt;</string>
+   </property>
+   <property name="openExternalLinks">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>15</x>
+     <y>115</y>
+     <width>521</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Este obra está bajo una &lt;a href=&quot;http://creativecommons.org/licenses/by/3.0/deed.es_ES&quot;&gt;licencia de Creative Commons Reconocimiento 3.0 Unported&lt;/a&gt;.</string>
+   </property>
+   <property name="openExternalLinks">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_4">
+   <property name="geometry">
+    <rect>
+     <x>15</x>
+     <y>70</y>
+     <width>96</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap>../imagenes/creative_commons_by.png</pixmap>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_5">
+   <property name="geometry">
+    <rect>
+     <x>15</x>
+     <y>150</y>
+     <width>80</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Créditos</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_6">
+   <property name="geometry">
+    <rect>
+     <x>15</x>
+     <y>180</y>
+     <width>566</width>
+     <height>86</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>&lt;li&gt;Gráficos:
+&lt;ul&gt;
+&lt;li&gt;Imágenes de las cartas por &lt;a href=&quot;http://byronknoll.blogspot.com.es/2011/03/vector-playing-cards.html&quot;&gt;Byron Knoll&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Imagen del reverso por &lt;a href=&quot;http://code.google.com/p/vectorized-playing-cards/&quot;&gt;Chris Aguilar&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Versión de las cartas en cuatro colores por &lt;a href=&quot;https://soundcloud.com/edwar-rodriguez&quot;&gt;Edwar&lt;/a&gt;, basada en el diseño de &lt;a href=&quot;http://byronknoll.blogspot.com.es/2011/03/vector-playing-cards.html&quot;&gt;Byron Knoll&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Iconos &lt;a href=&quot;https://www.iconfinder.com/search/?q=iconset%3Awindows-8-metro-style&quot;&gt;Windows 8 metro style&lt;/a&gt; de &lt;a href=&quot;http://icons8.com/&quot;&gt;VisualPharm&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;</string>
+   </property>
+   <property name="openExternalLinks">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_7">
+   <property name="geometry">
+    <rect>
+     <x>15</x>
+     <y>315</y>
+     <width>281</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>&lt;ul&gt;
+&lt;li&gt;Idea, asesoramiento y pruebas: &lt;a href=&quot;https://soundcloud.com/edwar-rodriguez&quot;&gt;Edwar&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;</string>
+   </property>
+   <property name="openExternalLinks">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_8">
+   <property name="geometry">
+    <rect>
+     <x>15</x>
+     <y>285</y>
+     <width>156</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Agradecimientos</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>Dialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>316</x>
+     <y>260</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>Dialog</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>248</x>
+     <y>254</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
