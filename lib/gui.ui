@@ -16,6 +16,18 @@
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>813</width>
+    <height>520</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>813</width>
+    <height>520</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>Poker Trainer</string>
   </property>
@@ -1132,14 +1144,56 @@
     </property>
     <addaction name="actionSalir"/>
    </widget>
+   <widget class="QMenu" name="menuJugadas">
+    <property name="title">
+     <string>Jugadas</string>
+    </property>
+    <addaction name="actionGuardar"/>
+    <addaction name="actionLimpar"/>
+   </widget>
+   <widget class="QMenu" name="menuAyuda">
+    <property name="title">
+     <string>Ayuda</string>
+    </property>
+    <addaction name="actionAcerca_de"/>
+   </widget>
    <addaction name="menuArchivo"/>
+   <addaction name="menuJugadas"/>
+   <addaction name="menuAyuda"/>
   </widget>
   <action name="actionSalir">
    <property name="text">
     <string>Salir</string>
    </property>
+   <property name="toolTip">
+    <string>Salir del programa</string>
+   </property>
    <property name="shortcut">
     <string>Ctrl+Q</string>
+   </property>
+  </action>
+  <action name="actionGuardar">
+   <property name="text">
+    <string>Guardar</string>
+   </property>
+   <property name="toolTip">
+    <string>Guarda las jugadas y estadísticas en un fichero</string>
+   </property>
+  </action>
+  <action name="actionLimpar">
+   <property name="text">
+    <string>Limpar</string>
+   </property>
+   <property name="toolTip">
+    <string>Limpa la lista de jugadas y las estadísticas</string>
+   </property>
+  </action>
+  <action name="actionAcerca_de">
+   <property name="text">
+    <string>Acerca de...</string>
+   </property>
+   <property name="toolTip">
+    <string>Acerca del programa</string>
    </property>
   </action>
  </widget>
