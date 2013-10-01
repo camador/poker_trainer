@@ -448,16 +448,25 @@ class GUI(QtGui.QWidget):
 
             Lista de jugadas
             ----------------
-            1 - 9x9x - 9x9x9x 9x 9x
-            2 - 9x9x - 9x9x9x 9x 9x
-            3 - 9x9x - 9x9x9x 9x 9x
-            .
-            .
-            .
+                                                        +-----------------------------+
+                                                        |       Fuerza (Acierto)      |
+            +--------------------------------+----------+---------+-------------------+
+            |             Jugada             | Revisada |  Flop   |  Turn   |  River  |
+            +--------------------------------+----------+---------+---------+---------+
+            | 1 - 10h 8h - 9d 10s 6d Ah 3s   |    X     | MF (S)  | MM (S)  | MD (S)  | 
+            +--------------------------------+----------+---------+---------+---------+
+            | 2 - Qs 2d - 4s Qd 3s 9h 7h     |    X     | MMF (S) | MMF (S) | MMF (N) | 
+            +--------------------------------+----------+---------+---------+---------+
+            | 3 - 4h 6c - Qd 3c 9h 3s 10c    |          |         |         |         | 
+            +--------------------------------+----------+---------+---------+---------+
+            | 4 - Ad 7h - 2d 10s Js 9s 3d    |    X     | N (S)   | N (N)   | N (-)   | 
+            +--------------------------------+----------+---------+---------+---------+
+            | 5 - 6h 5h - Kh 10s 9d 4s Ad    |    X     | -- (N)  | MMF (N) | MD (N)  | 
+            +--------------------------------+----------+---------+---------+---------+
 
             Estadísticas
             ------------
-            Porcentaje de aciertos (sobre x revisiones):
+            Porcentaje de aciertos (sobre 4 revisiones):
             +--------+--------+--------+--------+
             |  Flop  |  Turn  |  River |  Total |
             +--------+--------+--------+--------+
@@ -497,10 +506,77 @@ class GUI(QtGui.QWidget):
                 fichero.write('Lista de jugadas\n')
                 fichero.write('----------------\n')
 
-                for jugada in self.lista_jugadas:
-                    # lista_jugadas contiene [jugador, mesa, texto_jugadas]
-                    fichero.write('{0}\n'.format(jugada[2]))
+                fichero.write(u'                                            +-----------------------------+\n')
+                fichero.write(u'                                            |       Fuerza (Acierto)      |\n')
+                fichero.write(u'+--------------------------------+----------+---------+-------------------+\n')
+                fichero.write(u'|             Jugada             | Revisada |  Flop   |  Turn   |  River  |\n')
+                fichero.write(u'+--------------------------------+----------+---------+---------+---------+\n')
 
+                fuerzas = ['--', 'N', 'MD', 'MM', 'MF', 'MMF'] 
+
+                # lista_jugadas contiene [jugador, mesa, texto_jugadas]
+                for jugada in self.lista_jugadas:
+
+                    # Si la jugada está revisada añade la información a la línea
+                    if jugada[0].revisada:
+
+                        # Marca la fila como revisada
+                        revisada = 'X'
+
+                        # Recupera las valoraciones de fuerza que hizo el usuario
+                        valoraciones = jugada[0].valoracion
+                        revisiones = jugada[0].revision
+
+                        # valoraciones es una lista con 4 elementos, las valoraciones de Preflop a River,
+                        # como en Preflop no se hacen valoraciones de fuerza, se omite el primer elemento
+                        for paso in range(1, 4):
+
+                            # valoraciones[paso] contiene un valor de 0 a 5
+                            # 0 - Sin valorar
+                            # 1 - Nada (N)
+                            # 2 - Mano Débil (MD)
+                            # 3 - Mano Media (MM)
+                            # 4 - Mano Fuerte (MF)
+                            # 5 - Mano Muy Fuerte (MMF)
+                            fuerza = fuerzas[valoraciones[paso]]
+
+                            # Recupera la revisión del paso (paso - 1 porque sólo hay 
+                            # revisiones para Flop, Turn y River)                                
+                            # Los valores de la revisión pueden ser:
+                            # None - No revisado
+                            # 0 - Incorrecto
+                            # 1 - Correcto
+                            if revisiones[paso - 1] == 1:
+                                acierto = 'S'
+
+                            elif revisiones[paso - 1] == 0:
+                                acierto = 'N'
+
+                            else:
+                                acierto = '-'
+
+                            # Forma la cadena con los datos calculados
+                            celda = '{0} ({1})'.format(fuerza, acierto)
+
+                            # Asigna la cadena calculada al paso correspondiente
+                            if paso == 1:
+                                flop = celda 
+
+                            elif paso == 2:
+                                turn = celda 
+
+                            else:
+                                river = celda
+
+                    else:
+                        # Si no lo está, deja todos los campos en blanco
+                        revisada = ''
+                        flop = ''
+                        turn = ''
+                        river = ''
+                        
+                    fichero.write(u'| {0: <30} | {1: ^8} | {2: <7} | {3: <7} | {4: <7} | \n'.format(jugada[2], revisada, flop, turn, river))
+                    fichero.write(u'+--------------------------------+----------+---------+---------+---------+\n')
 
                 # Estadísticas
                 fichero.write('\n')
@@ -511,7 +587,7 @@ class GUI(QtGui.QWidget):
                 for paso in ['flop', 'turn', 'river', 'total']:
                     porcentajes[paso] = float(self.label_porcentaje[paso].text())
 
-                fichero.write('Porcentaje de aciertos (sobre {0} revisiones):\n'.format(self.model_jugadas.rowCount()))
+                fichero.write('Porcentaje de aciertos (sobre {0} revisiones):\n'.format(self.estadistica.revisadas))
                 fichero.write(u'+--------+--------+--------+--------+\n')
                 fichero.write(u'|  Flop  |  Turn  |  River |  Total |\n')
                 fichero.write(u'+--------+--------+--------+--------+\n')
@@ -633,7 +709,7 @@ class GUI(QtGui.QWidget):
                 # Sin revisar
                 pasos_no_revisados += 1
 
-        # Contador de cierto en los tres pasos
+        # Contador de acierto en los tres pasos
         # Si en la nueva revisión todo son aciertos y en la anterior no, incrementa
         # el contador
         nuevo_revision_pleno = jugador.revision_pleno()
