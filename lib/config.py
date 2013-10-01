@@ -17,6 +17,9 @@ class Config():
     # Aspecto de la aplicación (nombre del fichero dentro de 'lib')
     ESTILOS = 'estilos.qss'
 
+    # Tiempo que permanecen los mensajes en la barra de estado (en milisegundos)
+    DURACION_MENSAJES = 3000
+
     # Pasos
     PASOS = ('FLOP', 'TURN', 'RIVER', 'PREFLOP')
 

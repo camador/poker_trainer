@@ -221,7 +221,7 @@ class GUI(QtGui.QWidget):
         self.preflop()
 
         # Barra de estado
-        self.statusbar_barra_de_estado.showMessage('Bienvenido a Poker Trainer', 3000)
+        self.statusbar_barra_de_estado.showMessage('Bienvenido a Poker Trainer', self.config.DURACION_MENSAJES)
 
 
         # Muestra la ventana principal
@@ -442,7 +442,7 @@ class GUI(QtGui.QWidget):
         """
 
         # Informa al usuario
-        self.statusbar_barra_de_estado.showMessage('Guardando jugadas...', 3000)
+        self.statusbar_barra_de_estado.showMessage('Guardando jugadas...', self.config.DURACION_MENSAJES)
 
     @QtCore.pyqtSlot()
     def on_limpiar(self):
@@ -469,7 +469,7 @@ class GUI(QtGui.QWidget):
         self.activa_revision(False)
 
         # Informa al usuario
-        self.statusbar_barra_de_estado.showMessage(u'Jugadas y estadísticas eliminadas', 3000)
+        self.statusbar_barra_de_estado.showMessage(u'Jugadas y estadísticas eliminadas', self.config.DURACION_MENSAJES)
 
         # Desactiva los botones y menú de la lista de jugadas
         self.activa_botones_jugada(False)
