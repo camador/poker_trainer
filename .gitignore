@@ -3,3 +3,6 @@
 
 # Scripts python compilados
 *.pyc
+
+# Directorio de sesiones
+sesiones/
