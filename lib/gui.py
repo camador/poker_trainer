@@ -453,9 +453,12 @@ class GUI(QtGui.QWidget):
             .
             .
 
-            Porcentaje de aciertos (sobre x revisiones)
-
-            Flop %	Turn %	River %	Total %
+            Porcentaje de aciertos (sobre x revisiones):
+            +--------+--------+--------+--------+
+            |  Flop  |  Turn  |  River |  Total |
+            +--------+--------+--------+--------+
+            |   5.00 | 100.00 |   5.00 | 100.00 |
+            +--------+--------+--------+--------+
 
         """
         
@@ -489,8 +492,14 @@ class GUI(QtGui.QWidget):
 
 
                 # Estadísticas
+                porcentajes = {'flop': 555, 'turn': 551, 'river': 255, 'total': 211}
                 fichero.write('\n')
                 fichero.write('Porcentaje de aciertos (sobre {0} revisiones):\n'.format('x'))
+                fichero.write(u'+--------+--------+--------+--------+\n')
+                fichero.write(u'|  Flop  |  Turn  |  River |  Total |\n')
+                fichero.write(u'+--------+--------+--------+--------+\n')
+                fichero.write(u'| {0[flop]: >6.2f} | {0[turn]: >6.2f} | {0[river]: >6.2f} | {0[total]: >6.2f} |\n'.format(porcentajes))
+                fichero.write(u'+--------+--------+--------+--------+')
 
             # Mensaje para el usuario
             mensaje = u'Sesión guardada correctamente en {0}'.format(nombre_fichero)
