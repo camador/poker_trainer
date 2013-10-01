@@ -376,54 +376,57 @@ class GUI(QtGui.QWidget):
             correspondiente
         """
 
-        # Limpia la mesa y fuerza a Preflop el siguiente paso (simulando encontrarse en River)
-        self.inicializa_mesa()
-        self.crupier.paso = 2
-        self.set_paso(self.crupier.siguiente_paso())
+        # Sólo si hay jugadas que procesar (rowChanged se lanza tras vaciar la lista)
+        if self.lista_jugadas:
 
-        # Obtiene índice de la fila seleccionada
-        jugada = model_index.row()
+            # Limpia la mesa y fuerza a Preflop el siguiente paso (simulando encontrarse en River)
+            self.inicializa_mesa()
+            self.crupier.paso = 2
+            self.set_paso(self.crupier.siguiente_paso())
 
-        # Muestra las cartas del jugador y la mesa
-        jugador = self.lista_jugadas[jugada][0]
-        for i in range(2):
-            imagen_carta = QtGui.QPixmap(self.config.get_imagen_carta(jugador.cartas[i]))
-            self.label_jugador_cartas[i].setPixmap(imagen_carta)
+            # Obtiene índice de la fila seleccionada
+            jugada = model_index.row()
 
-        mesa = self.lista_jugadas[jugada][1]
-        for i in range(5):
-            imagen_carta = QtGui.QPixmap(self.config.get_imagen_carta(mesa.cartas[i]))
-            self.label_mesa_cartas[i].setPixmap(imagen_carta)
+            # Muestra las cartas del jugador y la mesa
+            jugador = self.lista_jugadas[jugada][0]
+            for i in range(2):
+                imagen_carta = QtGui.QPixmap(self.config.get_imagen_carta(jugador.cartas[i]))
+                self.label_jugador_cartas[i].setPixmap(imagen_carta)
 
-        # Muestra la valoración de fuerza
-        valoracion = jugador.valoracion
-        self.label_fuerza['flop'].setStyleSheet(self.config.ESTILOS_FUERZA[valoracion[1]])
-        self.label_fuerza['turn'].setStyleSheet(self.config.ESTILOS_FUERZA[valoracion[2]])
-        self.label_fuerza['river'].setStyleSheet(self.config.ESTILOS_FUERZA[valoracion[3]])
+            mesa = self.lista_jugadas[jugada][1]
+            for i in range(5):
+                imagen_carta = QtGui.QPixmap(self.config.get_imagen_carta(mesa.cartas[i]))
+                self.label_mesa_cartas[i].setPixmap(imagen_carta)
 
-        for label in self.label_fuerza.itervalues():
-            label.show()
+            # Muestra la valoración de fuerza
+            valoracion = jugador.valoracion
+            self.label_fuerza['flop'].setStyleSheet(self.config.ESTILOS_FUERZA[valoracion[1]])
+            self.label_fuerza['turn'].setStyleSheet(self.config.ESTILOS_FUERZA[valoracion[2]])
+            self.label_fuerza['river'].setStyleSheet(self.config.ESTILOS_FUERZA[valoracion[3]])
 
-        # Activa los controles de revisión y fija los valores, si los hay
-        self.activa_revision(True)
+            for label in self.label_fuerza.itervalues():
+                label.show()
 
-        pasos = ['flop', 'turn', 'river']
-        for i in range(3):
+            # Activa los controles de revisión y fija los valores, si los hay
+            self.activa_revision(True)
 
-            paso = pasos[i]
+            pasos = ['flop', 'turn', 'river']
+            for i in range(3):
 
-            # Recupera el valor de la revisón
-            revision = jugador.revision[i]
+                paso = pasos[i]
 
-            if revision == 1:
+                # Recupera el valor de la revisón
+                revision = jugador.revision[i]
 
-                # Correcto. Marca el radiobutton Ok
-                self.radiobutton_revision[paso][0].setChecked(True)
+                if revision == 1:
 
-            elif revision == 0:
+                    # Correcto. Marca el radiobutton Ok
+                    self.radiobutton_revision[paso][0].setChecked(True)
 
-                # Correcto. Marca el radiobutton NoOk
-                self.radiobutton_revision[paso][1].setChecked(True)
+                elif revision == 0:
+
+                    # Correcto. Marca el radiobutton NoOk
+                    self.radiobutton_revision[paso][1].setChecked(True)
 
     @QtCore.pyqtSlot()
     def on_guardar(self):
@@ -440,11 +443,23 @@ class GUI(QtGui.QWidget):
             Limpia la lista de jugadas y las estadísticas
         """
 
-        # Limpia la lista
+        # Limpia la lista (list)
+        self.lista_jugadas = list()
+
+        # Limpia la lista (widget)
         self.model_jugadas.removeRows(0, self.model_jugadas.rowCount())
         
         # Actualiza el título de la lista con el contador de jugadas
         self.groupbox_jugadas.setTitle('Jugadas')
+
+        # Resetea las estadísticas
+        self.estadistica = Estadistica()
+        self.label_numero_revisiones.setText('(sobre 0 revisiones)')
+        for paso in ['flop', 'turn', 'river', 'total']:
+            self.label_porcentaje[paso].setText('0')
+
+        # Desactiva los controles de revisión
+        self.activa_revision(False)
 
         # Informa al usuario
         self.statusbar_barra_de_estado.showMessage(u'Jugadas y estadísticas eliminadas', 3000)
@@ -544,7 +559,7 @@ class GUI(QtGui.QWidget):
                 porcentaje = self.estadistica.porcentaje_paso(paso)
                 
                 # Formato según el valor
-                if porcentaje == 100:
+                if porcentaje == 100 or porcentaje == 0:
                     texto_label = '{0:.0f}'.format(porcentaje)
                 else:
                     texto_label = '{0:.2f}'.format(porcentaje)
