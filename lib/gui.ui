@@ -1018,7 +1018,7 @@
       <x>585</x>
       <y>10</y>
       <width>226</width>
-      <height>471</height>
+      <height>465</height>
      </rect>
     </property>
     <property name="font">
@@ -1135,7 +1135,7 @@
      <x>0</x>
      <y>0</y>
      <width>813</width>
-     <height>25</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuArchivo">
