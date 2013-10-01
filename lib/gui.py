@@ -441,18 +441,22 @@ class GUI(QtGui.QWidget):
         """
             Guarda la lista de las jugadas y las estadísticas en un fichero con el siguiente formato:
 
-            POKER TRAINER
+             POKER TRAINER
+            ---------------
+
             Sesion: 2013-10-01 19:15:53
 
-            Lista de jugadas:
-            -----------------
-            1.- 9x9x - 9x9x9x 9x 9x
-            2.- 9x9x - 9x9x9x 9x 9x
-            3.- 9x9x - 9x9x9x 9x 9x
+            Lista de jugadas
+            ----------------
+            1 - 9x9x - 9x9x9x 9x 9x
+            2 - 9x9x - 9x9x9x 9x 9x
+            3 - 9x9x - 9x9x9x 9x 9x
             .
             .
             .
 
+            Estadísticas
+            ------------
             Porcentaje de aciertos (sobre x revisiones):
             +--------+--------+--------+--------+
             |  Flop  |  Turn  |  River |  Total |
@@ -482,13 +486,16 @@ class GUI(QtGui.QWidget):
             with open(nombre_fichero, 'w') as fichero:
 
                 # Cabecera
-                fichero.write('POKER TRAINER\n')
+                fichero.write(' POKER TRAINER\n')
+                fichero.write('---------------\n')
+
+                fichero.write('\n')
                 fichero.write('Sesión: {0}\n'.format(strftime('%Y-%m-%d %H:%M:%S', fecha)))
                 fichero.write('\n')
 
                 # Lista de jugadas
-                fichero.write('Lista de jugadas:\n')
-                fichero.write('-----------------\n')
+                fichero.write('Lista de jugadas\n')
+                fichero.write('----------------\n')
 
                 for jugada in self.lista_jugadas:
                     # lista_jugadas contiene [jugador, mesa, texto_jugadas]
@@ -496,17 +503,27 @@ class GUI(QtGui.QWidget):
 
 
                 # Estadísticas
+                fichero.write('\n')
+                fichero.write('Estadísticas\n')
+                fichero.write('------------\n')
+
                 porcentajes = {'flop': 0, 'turn': 0, 'river': 0, 'total': 0}
                 for paso in ['flop', 'turn', 'river', 'total']:
                     porcentajes[paso] = float(self.label_porcentaje[paso].text())
 
-                fichero.write('\n')
                 fichero.write('Porcentaje de aciertos (sobre {0} revisiones):\n'.format(self.model_jugadas.rowCount()))
                 fichero.write(u'+--------+--------+--------+--------+\n')
                 fichero.write(u'|  Flop  |  Turn  |  River |  Total |\n')
                 fichero.write(u'+--------+--------+--------+--------+\n')
                 fichero.write( '| {0[flop]: >6.2f} | {0[turn]: >6.2f} | {0[river]: >6.2f} | {0[total]: >6.2f} |\n'.format(porcentajes))
                 fichero.write(u'+--------+--------+--------+--------+')
+
+                # Autopropaganda
+                fichero.write('\n')
+                fichero.write('\n')
+                fichero.write('---\n')
+                fichero.write('Generado por Poker Trainer\n')
+                fichero.write('https://github.com/camador/poker_trainer')
 
             # Mensaje para el usuario
             mensaje = u'Sesión guardada correctamente en {0}'.format(nombre_fichero)
