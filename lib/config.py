@@ -14,6 +14,9 @@ class Config():
         Valores de configuración del juego
     """
 
+    # Aspecto de la aplicación (nombre del fichero dentro de 'lib')
+    ESTILOS = 'estilos.qss'
+
     # Pasos
     PASOS = ('FLOP', 'TURN', 'RIVER', 'PREFLOP')
 

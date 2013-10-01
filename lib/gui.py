@@ -64,8 +64,8 @@ class GUI(QtGui.QWidget):
         self.ui = uic.loadUi(os.path.join('lib', 'gui.ui'))
 
         # Estilos
-        # Si existe el fichero 'lib/estilos.qss' lo carga
-        fichero_qss = os.path.join('lib', 'estilos.qss')
+        # Si existe el fichero de estilos lo carga
+        fichero_qss = os.path.join('lib', self.config.ESTILOS)
         if os.path.isfile(fichero_qss):
             with open(fichero_qss, 'r') as estilos:
                 self.app.setStyleSheet(estilos.read())
