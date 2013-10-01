@@ -17,6 +17,9 @@ class Config():
     # Aspecto de la aplicación (nombre del fichero dentro de 'lib')
     ESTILOS = 'estilos.qss'
 
+    # Directorio para guardar las sesiones de jugadas
+    DIR_SESIONES = 'sesiones'
+
     # Tiempo que permanecen los mensajes en la barra de estado (en milisegundos)
     DURACION_MENSAJES = 3000
 

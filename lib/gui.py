@@ -23,6 +23,7 @@ from lib.acercade import Acercade
 # Otros
 import sys
 import os
+from time import gmtime, strftime
 
 class GUI(QtGui.QWidget):
     """
@@ -438,11 +439,69 @@ class GUI(QtGui.QWidget):
     @QtCore.pyqtSlot()
     def on_guardar(self):
         """
-            Guarda la lista de las jugadas y las estadísticas en un fichero
+            Guarda la lista de las jugadas y las estadísticas en un fichero con el siguiente formato:
+
+            POKER TRAINER
+            Sesion: 2013-10-01 19:15:53
+
+            Lista de jugadas:
+            -----------------
+            1.- 9x9x - 9x9x9x 9x 9x
+            2.- 9x9x - 9x9x9x 9x 9x
+            3.- 9x9x - 9x9x9x 9x 9x
+            .
+            .
+            .
+
+            Porcentaje de aciertos (sobre x revisiones)
+
+            Flop %	Turn %	River %	Total %
+
         """
+        
+        # Avisa al usuario de que se está guardando la sesión
+        self.statusbar_barra_de_estado.showMessage('Guardando jugadas...', self.config.DURACION_MENSAJES)
+
+        try:
+
+            # Comprueba si existe el directorio para las sesiones
+            if not os.path.isdir(self.config.DIR_SESIONES):
+
+                # El directorio no existe, intenta crearlo
+                os.makedirs(self.config.DIR_SESIONES)
+
+            # Nombre del fichero
+            fecha = gmtime()
+            nombre_fichero = 'poker_trainer-{0}.txt'.format(strftime('%Y_%m_%d-%H_%M_%S', fecha))
+            nombre_fichero = os.path.join(self.config.DIR_SESIONES, nombre_fichero)
+
+            # Crea el fichero y guarda la información
+            with open(nombre_fichero, 'w') as fichero:
+
+                # Cabecera
+                fichero.write('POKER TRAINER\n')
+                fichero.write('Sesión: {0}\n'.format(strftime('%Y-%m-%d %H:%M:%S', fecha)))
+                fichero.write('\n')
+
+                # Lista de jugadas
+                fichero.write('Lista de jugadas:\n')
+                fichero.write('-----------------\n')
+
+
+                # Estadísticas
+                fichero.write('\n')
+                fichero.write('Porcentaje de aciertos (sobre {0} revisiones):\n'.format('x'))
+
+            # Mensaje para el usuario
+            mensaje = u'Sesión guardada correctamente en {0}'.format(nombre_fichero)
+            
+        except:
+            # Mensaje para el usuario
+            mensaje = u'Error al guardar la sesión'
 
         # Informa al usuario
-        self.statusbar_barra_de_estado.showMessage('Guardando jugadas...', self.config.DURACION_MENSAJES)
+        self.statusbar_barra_de_estado.showMessage(mensaje, self.config.DURACION_MENSAJES)
+
 
     @QtCore.pyqtSlot()
     def on_limpiar(self):
