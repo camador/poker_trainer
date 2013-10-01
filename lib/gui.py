@@ -465,45 +465,50 @@ class GUI(QtGui.QWidget):
         # Avisa al usuario de que se está guardando la sesión
         self.statusbar_barra_de_estado.showMessage('Guardando jugadas...', self.config.DURACION_MENSAJES)
 
-        try:
+        #try:
 
-            # Comprueba si existe el directorio para las sesiones
-            if not os.path.isdir(self.config.DIR_SESIONES):
+        # Comprueba si existe el directorio para las sesiones
+        if not os.path.isdir(self.config.DIR_SESIONES):
 
-                # El directorio no existe, intenta crearlo
-                os.makedirs(self.config.DIR_SESIONES)
+            # El directorio no existe, intenta crearlo
+            os.makedirs(self.config.DIR_SESIONES)
 
-            # Nombre del fichero
-            fecha = gmtime()
-            nombre_fichero = 'poker_trainer-{0}.txt'.format(strftime('%Y_%m_%d-%H_%M_%S', fecha))
-            nombre_fichero = os.path.join(self.config.DIR_SESIONES, nombre_fichero)
+        # Nombre del fichero
+        fecha = gmtime()
+        nombre_fichero = 'poker_trainer-{0}.txt'.format(strftime('%Y_%m_%d-%H_%M_%S', fecha))
+        nombre_fichero = os.path.join(self.config.DIR_SESIONES, nombre_fichero)
 
-            # Crea el fichero y guarda la información
-            with open(nombre_fichero, 'w') as fichero:
+        # Crea el fichero y guarda la información
+        with open(nombre_fichero, 'w') as fichero:
 
-                # Cabecera
-                fichero.write('POKER TRAINER\n')
-                fichero.write('Sesión: {0}\n'.format(strftime('%Y-%m-%d %H:%M:%S', fecha)))
-                fichero.write('\n')
+            # Cabecera
+            fichero.write('POKER TRAINER\n')
+            fichero.write('Sesión: {0}\n'.format(strftime('%Y-%m-%d %H:%M:%S', fecha)))
+            fichero.write('\n')
 
-                # Lista de jugadas
-                fichero.write('Lista de jugadas:\n')
-                fichero.write('-----------------\n')
+            # Lista de jugadas
+            fichero.write('Lista de jugadas:\n')
+            fichero.write('-----------------\n')
 
 
-                # Estadísticas
-                porcentajes = {'flop': 555, 'turn': 551, 'river': 255, 'total': 211}
-                fichero.write('\n')
-                fichero.write('Porcentaje de aciertos (sobre {0} revisiones):\n'.format('x'))
-                fichero.write(u'+--------+--------+--------+--------+\n')
-                fichero.write(u'|  Flop  |  Turn  |  River |  Total |\n')
-                fichero.write(u'+--------+--------+--------+--------+\n')
-                fichero.write(u'| {0[flop]: >6.2f} | {0[turn]: >6.2f} | {0[river]: >6.2f} | {0[total]: >6.2f} |\n'.format(porcentajes))
-                fichero.write(u'+--------+--------+--------+--------+')
+            # Estadísticas
+            porcentajes = {'flop': 0, 'turn': 0, 'river': 0, 'total': 0}
+            for paso in ['flop', 'turn', 'river', 'total']:
+                porcentajes[paso] = float(self.label_porcentaje[paso].text())
 
-            # Mensaje para el usuario
-            mensaje = u'Sesión guardada correctamente en {0}'.format(nombre_fichero)
+            fichero.write('\n')
+            fichero.write('Porcentaje de aciertos (sobre {0} revisiones):\n'.format(self.model_jugadas.rowCount()))
+            fichero.write(u'+--------+--------+--------+--------+\n')
+            fichero.write(u'|  Flop  |  Turn  |  River |  Total |\n')
+            fichero.write(u'+--------+--------+--------+--------+\n')
+            fichero.write( '| {0[flop]: >6.2f} | {0[turn]: >6.2f} | {0[river]: >6.2f} | {0[total]: >6.2f} |\n'.format(porcentajes))
+            fichero.write(u'+--------+--------+--------+--------+')
+
+        # Mensaje para el usuario
+        mensaje = u'Sesión guardada correctamente en {0}'.format(nombre_fichero)
             
+        try:
+            pass
         except:
             # Mensaje para el usuario
             mensaje = u'Error al guardar la sesión'
