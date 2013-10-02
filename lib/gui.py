@@ -82,9 +82,6 @@ class GUI(QtGui.QWidget):
             Lee los widgets y los asigna a variables
         """
 
-        # Botón Salir
-        #self.pushbutton_salir = self.ui.findChild(QtGui.QPushButton, 'pbtSalir')
-
         # Botón Paso
         self.pushbutton_paso = self.ui.findChild(QtGui.QPushButton, 'pbtPaso')
 
@@ -178,9 +175,6 @@ class GUI(QtGui.QWidget):
             Conecta las señales de los widges
         """
 
-        # Botón Salir
-        #self.pushbutton_salir.clicked.connect(self.on_salir)
-
         # Botón Paso
         self.pushbutton_paso.clicked.connect(self.on_paso)
 
@@ -254,18 +248,6 @@ class GUI(QtGui.QWidget):
         # Muestra la ventana 'Acerca de'
         acercade = Acercade()
         acercade.main()
-
-    ##
-    ## SALIR
-    ##
-    @QtCore.pyqtSlot()
-    def on_salir(self):
-        """
-            Termina la ejecución del programa
-        """
-
-        # Sale
-        self.window_main_destroy()
 
     ##
     ## PASO 
