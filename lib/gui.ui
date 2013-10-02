@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
+ <author>camador.git@gmail.com - https://github.com/camador/poker_trainer</author>
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
   <property name="geometry">
@@ -365,31 +366,12 @@
       <string/>
      </property>
     </widget>
-    <widget class="QLabel" name="label_2">
+    <widget class="QLabel" name="lblOutsFlop">
      <property name="geometry">
       <rect>
        <x>10</x>
        <y>185</y>
-       <width>320</width>
-       <height>13</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <weight>50</weight>
-       <bold>false</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>8 Outs</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_3">
-     <property name="geometry">
-      <rect>
-       <x>350</x>
-       <y>185</y>
-       <width>91</width>
+       <width>51</width>
        <height>16</height>
       </rect>
      </property>
@@ -400,7 +382,61 @@
       </font>
      </property>
      <property name="text">
-      <string>5 Outs</string>
+      <string>20 Outs</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lblOutsTurn">
+     <property name="geometry">
+      <rect>
+       <x>350</x>
+       <y>185</y>
+       <width>51</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>20 Outs</string>
+     </property>
+    </widget>
+    <widget class="Line" name="lnOutsFlop">
+     <property name="geometry">
+      <rect>
+       <x>65</x>
+       <y>190</y>
+       <width>270</width>
+       <height>3</height>
+      </rect>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Plain</enum>
+     </property>
+     <property name="midLineWidth">
+      <number>0</number>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+    <widget class="Line" name="lnOutsTurn">
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>190</y>
+       <width>45</width>
+       <height>3</height>
+      </rect>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Plain</enum>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
      </property>
     </widget>
    </widget>
@@ -430,7 +466,7 @@
       <rect>
        <x>4</x>
        <y>20</y>
-       <width>126</width>
+       <width>125</width>
        <height>136</height>
       </rect>
      </property>
@@ -478,6 +514,12 @@
        <layout class="QHBoxLayout" name="horizontalLayout_4">
         <item>
          <widget class="QLabel" name="lblRevisionOk">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="minimumSize">
            <size>
             <width>20</width>
@@ -486,15 +528,15 @@
           </property>
           <property name="maximumSize">
            <size>
-            <width>36</width>
-            <height>36</height>
+            <width>25</width>
+            <height>25</height>
            </size>
           </property>
           <property name="text">
            <string/>
           </property>
           <property name="pixmap">
-           <pixmap>../imagenes/thumbs_up.png</pixmap>
+           <pixmap>../imagenes/checked_checkbox.png</pixmap>
           </property>
           <property name="scaledContents">
            <bool>true</bool>
@@ -511,15 +553,15 @@
           </property>
           <property name="maximumSize">
            <size>
-            <width>36</width>
-            <height>36</height>
+            <width>25</width>
+            <height>25</height>
            </size>
           </property>
           <property name="text">
            <string/>
           </property>
           <property name="pixmap">
-           <pixmap>../imagenes/thumbs_down.png</pixmap>
+           <pixmap>../imagenes/close_window.png</pixmap>
           </property>
           <property name="scaledContents">
            <bool>true</bool>
@@ -535,7 +577,7 @@
           <rect>
            <x>5</x>
            <y>0</y>
-           <width>70</width>
+           <width>60</width>
            <height>23</height>
           </rect>
          </property>
@@ -577,7 +619,7 @@
           <rect>
            <x>5</x>
            <y>0</y>
-           <width>70</width>
+           <width>60</width>
            <height>23</height>
           </rect>
          </property>
@@ -619,7 +661,7 @@
           <rect>
            <x>5</x>
            <y>0</y>
-           <width>70</width>
+           <width>60</width>
            <height>23</height>
           </rect>
          </property>
@@ -656,9 +698,21 @@
       </item>
       <item row="4" column="1" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
        <widget class="QPushButton" name="pbtRevision">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>70</width>
+          <height>20</height>
+         </size>
+        </property>
         <property name="maximumSize">
          <size>
-          <width>60</width>
+          <width>50</width>
           <height>20</height>
          </size>
         </property>
@@ -670,7 +724,11 @@
          </font>
         </property>
         <property name="text">
-         <string>Guardar</string>
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../imagenes/fast_forward.png</normaloff>../imagenes/fast_forward.png</iconset>
         </property>
         <property name="shortcut">
          <string>Enter</string>
@@ -887,9 +945,9 @@
     <property name="geometry">
      <rect>
       <x>585</x>
-      <y>5</y>
+      <y>4</y>
       <width>226</width>
-      <height>470</height>
+      <height>471</height>
      </rect>
     </property>
     <property name="font">
@@ -908,9 +966,9 @@
      <property name="geometry">
       <rect>
        <x>5</x>
-       <y>15</y>
+       <y>20</y>
        <width>215</width>
-       <height>420</height>
+       <height>410</height>
       </rect>
      </property>
      <property name="font">
@@ -941,16 +999,22 @@
      </property>
      <property name="geometry">
       <rect>
-       <x>165</x>
-       <y>440</y>
-       <width>55</width>
-       <height>20</height>
+       <x>190</x>
+       <y>435</y>
+       <width>30</width>
+       <height>25</height>
       </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
      </property>
      <property name="maximumSize">
       <size>
        <width>60</width>
-       <height>20</height>
+       <height>40</height>
       </size>
      </property>
      <property name="font">
@@ -961,7 +1025,11 @@
       </font>
      </property>
      <property name="text">
-      <string>Limpiar</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>../imagenes/trash.png</normaloff>../imagenes/trash.png</iconset>
      </property>
     </widget>
     <widget class="QPushButton" name="pbtGuardar">
@@ -970,16 +1038,22 @@
      </property>
      <property name="geometry">
       <rect>
-       <x>110</x>
-       <y>440</y>
-       <width>55</width>
-       <height>20</height>
+       <x>160</x>
+       <y>435</y>
+       <width>30</width>
+       <height>25</height>
       </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
      </property>
      <property name="maximumSize">
       <size>
        <width>60</width>
-       <height>20</height>
+       <height>40</height>
       </size>
      </property>
      <property name="font">
@@ -990,7 +1064,11 @@
       </font>
      </property>
      <property name="text">
-      <string>Guardar</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>../imagenes/save.png</normaloff>../imagenes/save.png</iconset>
      </property>
     </widget>
    </widget>
@@ -1042,8 +1120,8 @@
       <rect>
        <x>20</x>
        <y>15</y>
-       <width>384</width>
-       <height>43</height>
+       <width>392</width>
+       <height>48</height>
       </rect>
      </property>
      <layout class="QGridLayout" name="gridLayout_3">
@@ -1363,7 +1441,7 @@
      <x>0</x>
      <y>0</y>
      <width>813</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuArchivo">
@@ -1404,6 +1482,10 @@
    </property>
   </action>
   <action name="actionGuardar">
+   <property name="icon">
+    <iconset>
+     <normaloff>../imagenes/save.png</normaloff>../imagenes/save.png</iconset>
+   </property>
    <property name="text">
     <string>Guardar</string>
    </property>
@@ -1412,6 +1494,10 @@
    </property>
   </action>
   <action name="actionLimpar">
+   <property name="icon">
+    <iconset>
+     <normaloff>../imagenes/trash.png</normaloff>../imagenes/trash.png</iconset>
+   </property>
    <property name="text">
     <string>Limpar</string>
    </property>
@@ -1420,6 +1506,10 @@
    </property>
   </action>
   <action name="actionAcerca_de">
+   <property name="icon">
+    <iconset>
+     <normaloff>../imagenes/info.png</normaloff>../imagenes/info.png</iconset>
+   </property>
    <property name="text">
     <string>Acerca de...</string>
    </property>
@@ -1429,11 +1519,13 @@
   </action>
  </widget>
  <tabstops>
+  <tabstop>pbtPaso</tabstop>
   <tabstop>pbtFuerza5</tabstop>
   <tabstop>pbtFuerza4</tabstop>
   <tabstop>pbtFuerza3</tabstop>
   <tabstop>pbtFuerza2</tabstop>
   <tabstop>pbtFuerza1</tabstop>
+  <tabstop>cbxOuts</tabstop>
   <tabstop>lsvJugadas</tabstop>
   <tabstop>rdbFlopOk</tabstop>
   <tabstop>rdbFlopNoOk</tabstop>
@@ -1442,6 +1534,8 @@
   <tabstop>rdbRiverOk</tabstop>
   <tabstop>rdbRiverNoOk</tabstop>
   <tabstop>pbtRevision</tabstop>
+  <tabstop>pbtGuardar</tabstop>
+  <tabstop>pbtLimpiar</tabstop>
  </tabstops>
  <resources/>
  <connections>
