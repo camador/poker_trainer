@@ -30,10 +30,18 @@ class Jugador:
         # 5 - Mano Muy Fuerte (MMF)
         self.valoracion = [0, 0, 0, 0]
 
+        # Estimación de outs (flop y turn):
+        self.outs = [None, None]
+
         # Revisión de la valoración de la jugada por cada paso (Flop, Turn y River)
         # 0 -> Incorrecto
         # 1 -> Correcto
         self.revision = [None, None, None]
+
+        # Revisión de la estimación de Outs en Flop y Turn
+        # 0 -> Incorrecto
+        # 1 -> Correcto
+        self.revision_outs = [None, None]
 
         # Marcador para indicar si la jugada ha sido revisada
         self.revisada = False
