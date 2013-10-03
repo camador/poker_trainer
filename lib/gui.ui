@@ -367,6 +367,9 @@
      </property>
     </widget>
     <widget class="QLabel" name="lblOutsFlop">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -382,10 +385,13 @@
       </font>
      </property>
      <property name="text">
-      <string>20 Outs</string>
+      <string>0 Outs</string>
      </property>
     </widget>
     <widget class="QLabel" name="lblOutsTurn">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
      <property name="geometry">
       <rect>
        <x>350</x>
@@ -401,42 +407,45 @@
       </font>
      </property>
      <property name="text">
-      <string>20 Outs</string>
+      <string>0 Outs</string>
      </property>
     </widget>
-    <widget class="Line" name="lnOutsFlop">
+    <widget class="QLabel" name="lblLineaOutsFlop">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
      <property name="geometry">
       <rect>
-       <x>65</x>
-       <y>190</y>
-       <width>270</width>
-       <height>3</height>
+       <x>55</x>
+       <y>192</y>
+       <width>280</width>
+       <height>1</height>
       </rect>
      </property>
-     <property name="frameShadow">
-      <enum>QFrame::Plain</enum>
+     <property name="styleSheet">
+      <string notr="true">background: #000; border: 1px #000 solid;</string>
      </property>
-     <property name="midLineWidth">
-      <number>0</number>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+     <property name="text">
+      <string/>
      </property>
     </widget>
-    <widget class="Line" name="lnOutsTurn">
+    <widget class="QLabel" name="lblLineaOutsTurn">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
      <property name="geometry">
       <rect>
-       <x>400</x>
-       <y>190</y>
-       <width>45</width>
-       <height>3</height>
+       <x>395</x>
+       <y>191</y>
+       <width>50</width>
+       <height>1</height>
       </rect>
      </property>
-     <property name="frameShadow">
-      <enum>QFrame::Plain</enum>
+     <property name="styleSheet">
+      <string notr="true">background: #000; border: 1px #000 solid;</string>
      </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+     <property name="text">
+      <string/>
      </property>
     </widget>
    </widget>
@@ -578,7 +587,7 @@
            <x>5</x>
            <y>0</y>
            <width>60</width>
-           <height>23</height>
+           <height>20</height>
           </rect>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -620,7 +629,7 @@
            <x>5</x>
            <y>0</y>
            <width>60</width>
-           <height>23</height>
+           <height>20</height>
           </rect>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_8">
@@ -662,7 +671,7 @@
            <x>5</x>
            <y>0</y>
            <width>60</width>
-           <height>23</height>
+           <height>20</height>
           </rect>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout">
@@ -968,7 +977,7 @@
        <x>5</x>
        <y>20</y>
        <width>215</width>
-       <height>410</height>
+       <height>415</height>
       </rect>
      </property>
      <property name="font">
@@ -1000,7 +1009,7 @@
      <property name="geometry">
       <rect>
        <x>190</x>
-       <y>435</y>
+       <y>440</y>
        <width>30</width>
        <height>25</height>
       </rect>
@@ -1039,7 +1048,7 @@
      <property name="geometry">
       <rect>
        <x>160</x>
-       <y>435</y>
+       <y>440</y>
        <width>30</width>
        <height>25</height>
       </rect>
@@ -1094,7 +1103,7 @@
      <property name="geometry">
       <rect>
        <x>90</x>
-       <y>65</y>
+       <y>60</y>
        <width>245</width>
        <height>23</height>
       </rect>
@@ -1119,9 +1128,9 @@
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>15</y>
+       <y>10</y>
        <width>392</width>
-       <height>48</height>
+       <height>45</height>
       </rect>
      </property>
      <layout class="QGridLayout" name="gridLayout_3">
@@ -1441,7 +1450,7 @@
      <x>0</x>
      <y>0</y>
      <width>813</width>
-     <height>25</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuArchivo">
