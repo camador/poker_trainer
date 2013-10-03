@@ -94,6 +94,9 @@ class GUI(QtGui.QWidget):
                     self.ui.findChild(QtGui.QPushButton, 'pbtFuerza5')
                 ]
 
+        # Outs
+        self.combobox_outs = self.ui.findChild(QtGui.QComboBox, 'cbxOuts')
+
         # Cartas de la mesa
         self.label_mesa_cartas = [
                     self.ui.findChild(QtGui.QLabel, 'lblMesaCarta1'),
@@ -114,6 +117,12 @@ class GUI(QtGui.QWidget):
                     'flop': self.ui.findChild(QtGui.QLabel, 'lblFuerzaFlop'),
                     'turn': self.ui.findChild(QtGui.QLabel, 'lblFuerzaTurn'),
                     'river': self.ui.findChild(QtGui.QLabel, 'lblFuerzaRiver')
+                }
+
+        # Indicadores de los Outs
+        self.label_outs = {
+                    'flop': [self.ui.findChild(QtGui.QLabel, 'lblOutsFlop'), self.ui.findChild(QtGui.QLabel, 'lblLineaOutsFlop')],
+                    'turn': [self.ui.findChild(QtGui.QLabel, 'lblOutsTurn'), self.ui.findChild(QtGui.QLabel, 'lblLineaOutsTurn')]
                 }
 
         # Porcentaje de aciertos
@@ -804,6 +813,11 @@ class GUI(QtGui.QWidget):
         # Oculta los indicadores de fuerza
         for label in self.label_fuerza.itervalues():
             label.hide()
+
+        # Oculta los indicadores de Outs
+        for label in self.label_outs.itervalues():
+            label[0].hide()
+            label[1].hide()
         
         #
         # Limpia la mesa
