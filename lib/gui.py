@@ -406,6 +406,19 @@ class GUI(QtGui.QWidget):
             for label in self.label_fuerza.itervalues():
                 label.show()
 
+            # Muestra los Outs
+            outs = jugador.outs
+            
+            if outs[0]:
+                self.label_outs['flop'][0].setText('{0} Outs'.format(outs[0]))
+                self.label_outs['flop'][0].show()
+                self.label_outs['flop'][1].show()
+
+            if outs[1]:
+                self.label_outs['turn'][0].setText('{0} Outs'.format(outs[1]))
+                self.label_outs['turn'][0].show()
+                self.label_outs['turn'][1].show()
+
             # Activa los controles de revisión y fija los valores, si los hay
             self.activa_revision(True)
 
