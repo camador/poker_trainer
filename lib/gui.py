@@ -320,6 +320,20 @@ class GUI(QtGui.QWidget):
             Cuarta carta de la mesa
         """ 
 
+        # Guarda los Outs seleccionados por el usuario para el Flop
+        out = self.combobox_outs.currentText()
+        if  out == '--':
+            out = None
+            self.label_outs['flop'][0].hide()
+            self.label_outs['flop'][1].hide()
+        else:
+            out = int(out)
+            self.label_outs['flop'][0].setText('{0} Outs'.format(out))
+            self.label_outs['flop'][0].show()
+            self.label_outs['flop'][1].show()
+
+        self.jugador.outs[0] = out
+
         # Genera la carta
         self.mesa.cartas.insert(3, self.crupier.repartir_carta())
         
