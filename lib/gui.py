@@ -323,18 +323,21 @@ class GUI(QtGui.QWidget):
             Cuarta carta de la mesa
         """ 
 
-        # Guarda los Outs seleccionados por el usuario para el Flop
+        # Muestra u oculta los Outs según la selección del usuario
         out = self.combobox_outs.currentText()
-        if  out == '--':
+        if out == '--':
+            # El usuario no ha establecido los Outs
             out = None
             self.label_outs['flop'][0].hide()
             self.label_outs['flop'][1].hide()
         else:
+            # El usuario ha establecido los Outs
             out = int(out)
             self.label_outs['flop'][0].setText('{0} Outs'.format(out))
             self.label_outs['flop'][0].show()
             self.label_outs['flop'][1].show()
 
+        # Guarda los Outs seleccionados por el usuario para el Flop
         self.jugador.outs[0] = out
 
         # Genera la carta
@@ -348,6 +351,23 @@ class GUI(QtGui.QWidget):
         """ 
             Quinta carta de la mesa
         """ 
+
+        # Muestra u oculta los Outs según la selección del usuario
+        out = self.combobox_outs.currentText()
+        if out == '--':
+            # El usuario no ha establecido los Outs
+            out = None
+            self.label_outs['turn'][0].hide()
+            self.label_outs['turn'][1].hide()
+        else:
+            # El usuario ha establecido los Outs
+            out = int(out)
+            self.label_outs['turn'][0].setText('{0} Outs'.format(out))
+            self.label_outs['turn'][0].show()
+            self.label_outs['turn'][1].show()
+
+        # Guarda los Outs seleccionados por el usuario para el Flop
+        self.jugador.outs[1] = out
 
         # Desactiva combo de los outs
         self.activa_outs(False)
