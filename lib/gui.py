@@ -309,6 +309,9 @@ class GUI(QtGui.QWidget):
         # Activa los botones para la fuerza
         self.activa_botones_fuerza(True)
 
+        # Activa combo de los outs
+        self.activa_outs(True)
+
         # Reparte las cartas
         for i in range(3):
             self.mesa.cartas.insert(i, self.crupier.repartir_carta())
@@ -345,6 +348,9 @@ class GUI(QtGui.QWidget):
         """ 
             Quinta carta de la mesa
         """ 
+
+        # Desactiva combo de los outs
+        self.activa_outs(False)
 
         # Genera la carta
         self.mesa.cartas.insert(4, self.crupier.repartir_carta())
@@ -841,6 +847,9 @@ class GUI(QtGui.QWidget):
         for label in self.label_fuerza.itervalues():
             label.hide()
 
+        # Desactiva el combo de los outs
+        self.activa_outs(False)
+
         # Oculta los indicadores de Outs
         for label in self.label_outs.itervalues():
             label[0].hide()
@@ -896,6 +905,13 @@ class GUI(QtGui.QWidget):
 
         # Menú
         self.menu_jugadas.setEnabled(activar)
+
+    def activa_outs(self, activar = True):
+        """
+            Activa o desactiva el combo de los outs
+        """
+
+        self.combobox_outs.setEnabled(activar)
 
 if __name__ == '__main__':
     print u'Módulo no ejecutable.'
