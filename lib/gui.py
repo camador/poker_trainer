@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# César Amador - camador.git@gmail.com 
+# César Amador - camador.git@gmail.com
 #
 # Licenciado bajo Creative Commons Reconocimiento 3.0 Unported: http://creativecommons.org/licenses/by/3.0/deed.es_ES
 #
@@ -11,7 +11,7 @@
 from PyQt4 import uic, QtGui, QtCore
 
 # Póker
-from lib.config import Config 
+from lib.config import Config
 from lib.jugador import Jugador
 from lib.mesa import Mesa
 from lib.crupier import Crupier
@@ -27,7 +27,7 @@ from time import gmtime, strftime
 
 class GUI(QtGui.QWidget):
     """
-        Interfaz gráfica de usuario 
+        Interfaz gráfica de usuario
     """
 
     def __init__(self):
@@ -60,7 +60,7 @@ class GUI(QtGui.QWidget):
 
         # Fija el nombre de la aplicación
         self.app.setApplicationName('Poker Trainer')
-        
+
         # Lee el fichero que contiene la interfaz gráfica
         self.ui = uic.loadUi(os.path.join('lib', 'gui.ui'))
 
@@ -105,7 +105,7 @@ class GUI(QtGui.QWidget):
                     self.ui.findChild(QtGui.QLabel, 'lblMesaCarta4'),
                     self.ui.findChild(QtGui.QLabel, 'lblMesaCarta5')
                 ]
-        
+
         # Cartas del jugador
         self.label_jugador_cartas = [
                     self.ui.findChild(QtGui.QLabel, 'lblJugadorCarta1'),
@@ -206,6 +206,9 @@ class GUI(QtGui.QWidget):
         # Menú
         self.action_acerca_de.triggered.connect(self.on_acerca_de)
 
+        # Outs
+        self.combobox_outs.currentIndexChanged.connect(self.on_outs_changed)
+
     ##
     ## MAIN
     ##
@@ -213,7 +216,7 @@ class GUI(QtGui.QWidget):
         """
             Método de inicio
         """
-        
+
         #
         # Estado inicial del interfaz
         #
@@ -233,7 +236,7 @@ class GUI(QtGui.QWidget):
 
         # A la espera de evento
         self.app.exec_()
-    
+
     ##
     ## VENTANA PRINCIPAL
     ##
@@ -259,7 +262,7 @@ class GUI(QtGui.QWidget):
         acercade.main()
 
     ##
-    ## PASO 
+    ## PASO
     ##
     @QtCore.pyqtSlot()
     def on_paso(self):
@@ -289,7 +292,7 @@ class GUI(QtGui.QWidget):
 
     def preflop(self):
         """
-            Dos cartas para el jugador, ninguna en la mesa 
+            Dos cartas para el jugador, ninguna en la mesa
         """
 
         # Inicializa la mesa
@@ -302,10 +305,10 @@ class GUI(QtGui.QWidget):
             self.label_jugador_cartas[i].setPixmap(imagen_carta)
 
     def flop(self):
-        """ 
+        """
             Tres cartas en la mesa
-        """ 
-        
+        """
+
         # Activa los botones para la fuerza
         self.activa_botones_fuerza(True)
 
@@ -319,9 +322,9 @@ class GUI(QtGui.QWidget):
             self.label_mesa_cartas[i].setPixmap(imagen_carta)
 
     def turn(self):
-        """ 
+        """
             Cuarta carta de la mesa
-        """ 
+        """
 
         # Muestra u oculta los Outs según la selección del usuario
         out = self.combobox_outs.currentText()
@@ -342,15 +345,15 @@ class GUI(QtGui.QWidget):
 
         # Genera la carta
         self.mesa.cartas.insert(3, self.crupier.repartir_carta())
-        
+
         # Y la muestra
         imagen_carta = QtGui.QPixmap(self.config.get_imagen_carta(self.mesa.cartas[3]))
         self.label_mesa_cartas[3].setPixmap(imagen_carta)
 
     def river(self):
-        """ 
+        """
             Quinta carta de la mesa
-        """ 
+        """
 
         # Muestra u oculta los Outs según la selección del usuario
         out = self.combobox_outs.currentText()
@@ -374,11 +377,11 @@ class GUI(QtGui.QWidget):
 
         # Genera la carta
         self.mesa.cartas.insert(4, self.crupier.repartir_carta())
-        
+
         # Y la muestra
         imagen_carta = QtGui.QPixmap(self.config.get_imagen_carta(self.mesa.cartas[4]))
         self.label_mesa_cartas[4].setPixmap(imagen_carta)
-    
+
 
     ##
     ## FUERZA
@@ -395,15 +398,45 @@ class GUI(QtGui.QWidget):
         # lo muestra
         if self.crupier.paso == 1:
             nombre = 'flop'
-        
+
         elif self.crupier.paso == 2:
             nombre = 'turn'
-        
+
         else:
             nombre = 'river'
-            
+
         self.label_fuerza[nombre].setStyleSheet(self.config.ESTILOS_FUERZA[fuerza])
         self.label_fuerza[nombre].show()
+
+    ##
+    ## OUTS
+    ##
+    @QtCore.pyqtSlot(int)
+    def on_outs_changed(self, index):
+        """
+            Actualiza el indicador de los outs en el paso correspondiente cuando
+            se modifica la selección en el combobox
+        """
+
+        # Determina el paso
+        # Flop = 1
+        # Turn = 2
+        paso = 'flop'
+        if self.crupier.paso == 2:
+            paso = 'turn'
+
+        # Muestra u oculta los Outs según la selección del usuario
+        out = self.combobox_outs.currentText()
+        if out == '--':
+            # El usuario no ha establecido los Outs
+            self.label_outs[paso][0].hide()
+            self.label_outs[paso][1].hide()
+        else:
+            # El usuario ha establecido los Outs
+            self.label_outs[paso][0].setText('{0} Outs'.format(out))
+            self.label_outs[paso][0].show()
+            self.label_outs[paso][1].show()
+
 
     ##
     ## LISTA
@@ -448,7 +481,7 @@ class GUI(QtGui.QWidget):
 
             # Muestra los Outs
             outs = jugador.outs
-            
+
             if outs[0]:
                 self.label_outs['flop'][0].setText('{0} Outs'.format(outs[0]))
                 self.label_outs['flop'][0].show()
@@ -497,15 +530,15 @@ class GUI(QtGui.QWidget):
             +--------------------------------+----------+---------+-------------------+
             |             Jugada             | Revisada |  Flop   |  Turn   |  River  |
             +--------------------------------+----------+---------+---------+---------+
-            | 1 - 10h 8h - 9d 10s 6d Ah 3s   |    X     | MF (S)  | MM (S)  | MD (S)  | 
+            | 1 - 10h 8h - 9d 10s 6d Ah 3s   |    X     | MF (S)  | MM (S)  | MD (S)  |
             +--------------------------------+----------+---------+---------+---------+
-            | 2 - Qs 2d - 4s Qd 3s 9h 7h     |    X     | MMF (S) | MMF (S) | MMF (N) | 
+            | 2 - Qs 2d - 4s Qd 3s 9h 7h     |    X     | MMF (S) | MMF (S) | MMF (N) |
             +--------------------------------+----------+---------+---------+---------+
-            | 3 - 4h 6c - Qd 3c 9h 3s 10c    |          |         |         |         | 
+            | 3 - 4h 6c - Qd 3c 9h 3s 10c    |          |         |         |         |
             +--------------------------------+----------+---------+---------+---------+
-            | 4 - Ad 7h - 2d 10s Js 9s 3d    |    X     | N (S)   | N (N)   | N (-)   | 
+            | 4 - Ad 7h - 2d 10s Js 9s 3d    |    X     | N (S)   | N (N)   | N (-)   |
             +--------------------------------+----------+---------+---------+---------+
-            | 5 - 6h 5h - Kh 10s 9d 4s Ad    |    X     | -- (N)  | MMF (N) | MD (N)  | 
+            | 5 - 6h 5h - Kh 10s 9d 4s Ad    |    X     | -- (N)  | MMF (N) | MD (N)  |
             +--------------------------------+----------+---------+---------+---------+
 
             Estadísticas
@@ -518,7 +551,7 @@ class GUI(QtGui.QWidget):
             +--------+--------+--------+--------+
 
         """
-        
+
         # Avisa al usuario de que se está guardando la sesión
         self.statusbar_barra_de_estado.showMessage('Guardando jugadas...', self.config.DURACION_MENSAJES)
 
@@ -556,7 +589,7 @@ class GUI(QtGui.QWidget):
                 fichero.write(u'|             Jugada             | Revisada |  Flop   |  Turn   |  River  |\n')
                 fichero.write(u'+--------------------------------+----------+---------+---------+---------+\n')
 
-                fuerzas = ['--', 'N', 'MD', 'MM', 'MF', 'MMF'] 
+                fuerzas = ['--', 'N', 'MD', 'MM', 'MF', 'MMF']
 
                 # lista_jugadas contiene [jugador, mesa, texto_jugadas]
                 for jugada in self.lista_jugadas:
@@ -584,8 +617,8 @@ class GUI(QtGui.QWidget):
                             # 5 - Mano Muy Fuerte (MMF)
                             fuerza = fuerzas[valoraciones[paso]]
 
-                            # Recupera la revisión del paso (paso - 1 porque sólo hay 
-                            # revisiones para Flop, Turn y River)                                
+                            # Recupera la revisión del paso (paso - 1 porque sólo hay
+                            # revisiones para Flop, Turn y River)
                             # Los valores de la revisión pueden ser:
                             # None - No revisado
                             # 0 - Incorrecto
@@ -604,10 +637,10 @@ class GUI(QtGui.QWidget):
 
                             # Asigna la cadena calculada al paso correspondiente
                             if paso == 1:
-                                flop = celda 
+                                flop = celda
 
                             elif paso == 2:
-                                turn = celda 
+                                turn = celda
 
                             else:
                                 river = celda
@@ -618,7 +651,7 @@ class GUI(QtGui.QWidget):
                         flop = ''
                         turn = ''
                         river = ''
-                        
+
                     fichero.write(u'| {0: <30} | {1: ^8} | {2: <7} | {3: <7} | {4: <7} | \n'.format(jugada[2], revisada, flop, turn, river))
                     fichero.write(u'+--------------------------------+----------+---------+---------+---------+\n')
 
@@ -647,7 +680,7 @@ class GUI(QtGui.QWidget):
 
             # Mensaje para el usuario
             mensaje = u'Sesión guardada correctamente en {0}'.format(nombre_fichero)
-            
+
         except:
             # Mensaje para el usuario
             mensaje = u'Error al guardar la sesión'
@@ -667,7 +700,7 @@ class GUI(QtGui.QWidget):
 
         # Limpia la lista (widget)
         self.model_jugadas.removeRows(0, self.model_jugadas.rowCount())
-        
+
         # Actualiza el título de la lista con el contador de jugadas
         self.groupbox_jugadas.setTitle('Jugadas')
 
@@ -685,7 +718,7 @@ class GUI(QtGui.QWidget):
 
         # Desactiva los botones y menú de la lista de jugadas
         self.activa_botones_jugada(False)
-        
+
 
     ##
     ## REVISION
@@ -708,7 +741,7 @@ class GUI(QtGui.QWidget):
 
         # Número de pasos no revisados (radiobuttons no seleccionados)
         pasos_no_revisados = 0
-        
+
         # Por cada paso comprueba la revisión:
         # {
         #   paso1 = [radiook, radionook],
@@ -776,7 +809,7 @@ class GUI(QtGui.QWidget):
 
                 # Cálculo del porcentaje
                 porcentaje = self.estadistica.porcentaje_paso(paso)
-                
+
                 # Formato según el valor
                 if porcentaje == 100 or porcentaje == 0:
                     texto_label = '{0:.0f}'.format(porcentaje)
@@ -796,7 +829,7 @@ class GUI(QtGui.QWidget):
     ##
     def set_paso(self, paso = 0):
         """
-            Establece el texto del botón de los pasos según el valor del parámetro recibido 
+            Establece el texto del botón de los pasos según el valor del parámetro recibido
         """
         self.pushbutton_paso.setText(self.crupier.pasos[paso])
 
@@ -806,16 +839,16 @@ class GUI(QtGui.QWidget):
         """
             Prepara la mesa para iniciar una nueva ronda:
             - Guarda la información de la ronda anterior
-            - Limpia la mesa 
+            - Limpia la mesa
         """
-    
+
         # Si se trata de la primera ronda tras ejecutar el programa la quinta carta de la mesa
         # no existirá porque no habrá habido todavía ningún River. En caso contrario realiza las
         # siguientes acciones con la última jugada:
-        # 
+        #
         # - Actualiza la lista de jugadas de la pantalla
         # - Actualiza la lista de las jugadas (list)
-        if len(self.mesa.cartas) == 5: 
+        if len(self.mesa.cartas) == 5:
 
             #
             # Lista de judadas de pantalla
@@ -823,8 +856,8 @@ class GUI(QtGui.QWidget):
 
             # Número de jugadas de la lista. En este momento todavía no ha sido añadida la jugada actual.
             num_jugadas = self.model_jugadas.rowCount() + 1
-            
-            # Formato del item: 
+
+            # Formato del item:
             #
             #  Nº de jugada - Cartas del jugador - Cartas de la mesa
             #  1 - Ks 3h - Jc Ad 3s 7c Kh
@@ -874,17 +907,17 @@ class GUI(QtGui.QWidget):
         for label in self.label_outs.itervalues():
             label[0].hide()
             label[1].hide()
-        
+
         #
         # Limpia la mesa
-        # 
+        #
 
         # Se recogen las cartas de la mesa, es decir, se inicializan los objetos
         # del jugador, mesa y crupier
         self.jugador = Jugador()
         self.mesa = Mesa()
         self.crupier = Crupier(self.config)
-    
+
         # Cartas de la mesa
         reverso = QtGui.QPixmap(self.config.get_imagen_carta(0))
         for carta in self.label_mesa_cartas:
@@ -897,7 +930,7 @@ class GUI(QtGui.QWidget):
 
         for boton in self.botones_fuerza:
             boton.setEnabled(activar)
-    
+
     def activa_revision(self, activar = True):
         """
             Activa o desactiva los controles de revisión
@@ -916,9 +949,9 @@ class GUI(QtGui.QWidget):
 
     def activa_botones_jugada(self, activar = True):
         """
-            Activa o desactiva los botones y menú de la lista de jugadas 
+            Activa o desactiva los botones y menú de la lista de jugadas
         """
-        
+
         # Botones
         self.pushbutton_guardar.setEnabled(activar)
         self.pushbutton_limpiar.setEnabled(activar)
